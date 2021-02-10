@@ -1,0 +1,2268 @@
+---
+title: "Practicas Actuariales en R"
+id: "Practica 01"
+subtitle: "Efectos de la tasa de Interés en el Seguro de Vida"
+author: "Martin QUezada"
+output: 
+  learnr::tutorial:
+    progressive: true
+    allow_skip: true
+    css: "css/font-size.css"
+runtime: shiny_prerendered
+---
+
+<style> body {text-align: justify} </style>
+
+```{r setup, include=FALSE}
+library(learnr)
+library(gradethis)
+library(kableExtra)
+library(tidyverse)
+library(ggtext)
+library(readr)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## 0. Antes de empezar 
+ 
+
+Bienvenidos a las practicas actuariales en R.
+Estas son las secciones __*tipo*__ en las que podrás practicar escribiendo código en la consola de R. 
+ 
+Si no estás familiarizado con la interfaz de _R_ o _RStudio_, podría parecerte un poco intimidante, pero la estructura de los ejercicios te permite modificar el código y reiniciarlo las veces que sea necesario, sin causar ningún error o pérdida de información que no sea recuperable (Para reiniciar el código da click en __Start Over__).
+
+Dado que la aplicación puede correr en diferentes dispositivos, es posible que el texto no se despliegue en una sola pantalla y que debas usar la barra de recorrido hacia abajo. Tus respuestas las debes incluir en los apartados **< < Tu Código > >** (sustituyendo todos los caracteres de esta cadena). 
+
+El texto de cada ejercicio complementa el video, por lo que te sugiero que revises estos contenidos, así como el código ya escrito, el cual te puede servir como ejemplo para desarrollar tu práctica.
+
+Si ejecutas el ejercicio y la sintaxis no es la correcta o no incluyes tu código, aparecerá un mensaje indicando error; recuerda que tienes la opción de reiniciar el ejercicio.
+
+
+
+
+```{r bienvenida, exercise=TRUE,exercise.cap="Manejo de variables, funciones básicas "}
+# El texto que esta a la derecha del simbolo "#" es un comentario y el compilador de R no lo toma en cuenta.
+
+# Funciones: "exp""  exponencial, "sqrt"" raiz cuadrada,  "seq"" secuencia entre los valores de referencia
+
+VarExponencial<-exp(0.5)   
+Varraiz<-sqrt(2)
+Indice<-seq(1:10)
+
+# los argumentos de muchas funciones pueden se vectores o matrices
+
+VarExponencial<-exp(Indice)
+
+Varraiz<-sqrt(Indice)
+
+# Si incluyes el nombre de una variables sin niguna asignación, esta de desplegara en pantalla, por ejemplo: 
+
+VarExponencial    # Muestra el contenido de la variable VarExponencial
+
+Indice            # Muestra el contenido de la variable Indice
+
+Varraiz           # Muestra el contenido de la variable Varraiz, nota que es un vector
+
+
+# Imprime la varible Indice, crea la variable "Cubo" con la tecera potencial del cada compomente de Indice. 
+
+print(c("Este es el Indice  ",<<Tu código >>))
+
+Cubo<- <<Tu código>>
+
+```
+
+<div id="bienvenida-hint">
+**Hint:** Puedes usar el operador '^' para elevar a una potencia.
+</div>
+
+También encontrarás diferentes reactivos que te servirán para ratificar tu entendimiento sobre los temas revisados
+
+```{r duda01, exercise.cap="Comprensión"}
+question("Cual es la razón por la que se actualizo VarExponencial de 1 componente a 10 componentes",
+         answer("Por que Índice tiene 10 componentes",message="Si bien Índice tiene 10 componentes, esta no es la razón"),
+         answer("Por que la función exp, regresa un valor por cada uno de los componentes del parámetro de entrada",correct=TRUE),
+         answer("Por que se actualizo el atributo length de la variable", message="El valor length se actualizo como consecuencia del llamado de la función exp"),
+         allow_retry = TRUE,
+         random_answer_order = TRUE
+         )
+
+```
+
+Al final de cada sección hay una recapitulación de conceptos e instrucciones; comprueba que puedes poner en práctica tus conocimientos. 
+
+```{r Resumen01, exercise=TRUE, exercise.cap="Resumen"}
+
+# ¿Qué aprendimos?
+
+# Las secciones de código pueden incluir un botón "Hint", que da una pista de cómo desarrollar el código.
+
+# En algunos incluyen una propuesta de código, considera que tu código puede ser diferente, ¡si llegas al mismo resultado tu respuesta es satisfactoria!
+
+
+```
+
+
+```{r Resumen01-solution}
+
+# Revisamos cual es el manejo de los ejercicios de prácticas actuariales.
+# Usamos las funciones de R.
+# exp    exponencial
+# sqrt   raíz cuadrada
+# seq    crea una secuencia numérica
+# ^      Potencia
+# paste  Aglutina cadenas de valores y variables y las despliega en la pantalla.
+
+
+print(c("Este es el Indice  ", Indice))
+
+Cubo<- Indice^3
+
+
+```
+
+## 1. Variables y Operadores Aritmeticos {data-progressive=TRUE}
+
+
+Una vez que sabemos cómo manejar las secciones de código, *!empecemos con los ejercicios!*
+
+En esta sección utilizarás los diferentes operadores aritméticos, así como algunas funciones generales.
+
+
+```{r EJER01, exercise=TRUE,exercise.cap="Variables y operadores aritmeticos"}
+
+# inicializar variables, observa que en una solo línea de código se pueden realizar diferentes asignaciones  
+
+i <- tasa <- .04 ; n <- plazo <- 10
+
+# Inicializa las variables VP y vp en cero
+
+< < Tu Código > >
+
+# Formulamos la variable de respuesta
+
+VP <- (1-(1+tasa)^(-plazo))/tasa   
+vp <- (1-(1+i)^(-n))/i
+
+# Desplegamos en pantalla el resultado, usamos una variable *character*
+
+Nombre <- "valor presente una anualidad cierta "
+paste (Nombre,VP," por ",plazo," años y ",tasa," tasa de interés")
+
+# Ahora te corresponde escribir el código de renta y Vpf
+
+# Cual es el monto de la renta para alcanzar un valor presente de 10,000 en un plazo de 10 años a una tasa de Interés de 5% anual, 
+
+renta <- << Tu código >>
+
+# Del ejercicio anterior, modifica la formula del valor presente considerando que los pagos se hacen al principio del año
+  
+VPf <-  << Tu código >>
+
+```
+
+<div id="EJER01-hint">
+**Hint:** Despeja la variable y digita la formula.
+</div>
+
+Cuando la tasa de interés es una incógnita vamos a mostrar un proceso gráfico del cálculo del valor presente con diferentes tasas.
+
+```{r tasa00, exercise=TRUE, exercise.cap="Operadore aritmeticos, graficos básicos"}
+tasa<-c(0.01,0.05,0.07,0.09,0.12)
+pago<-1300
+plazo<-10
+VP <- pago*(1-(1+tasa)^(-plazo))/tasa 
+plot(tasa,VP, xlab="Tasa de Interes",ylab="Valor Presente",main="Grafica Original")
+abline(a=10000,b=0,col="red")
+
+
+# Modifica los valores de tasa alrededor de 5% y vuelve a correr el ejercicio
+
+
+```
+
+
+```{r duda02, exercise.cap="Comprensión Operadores Aritméticos"}
+question("Verifica las expresiones aa<-23%%2==1; sum(aa) ¿Determina si es válida?  ",
+         answer("La expresion no es valida, no se pueden combinar operadores aritméticos y lógicos en la misma expresión",message="Es factible combinar varias operaciones en la misma expresión, siempre y cuando los resultados de izquierda a derecha sean consistentes"),
+         answer("La primera operación es válida, la segunda no es válida",message="si la primera operación %% entrega um valor númerico es posible compararlo con 1"),
+         answer("La primera operación no es válida, la segunda es válida", message="El operador %% entrega el modulo/residuo de la división al compraro con 1 determina si el número es non"),
+         answer("Las dos son válidas",correct=TRUE,message="Bien, la expresión determina si el número es non"),
+         allow_retry = TRUE,
+         random_answer_order = TRUE
+         )
+
+```
+
+```{r duda03, exercise.cap="Operadores Lógicos"}
+question("Verifica el resultado de la siguiente expresión A <- !(3<=(4/12+8/11) | 2>2^(1/2))",
+         answer("Es verdadera, porque 2 es mayor que raiz de 2",message="Si bien 2 es mayor que raiz de dos y al evaluarlo en un expresión disyuntiva prevalece el valor verdadero, falta aplicar la negación"),
+         answer("Es falsa, por que  3<=(4/12+8/11) es falsa",message="Es necesario evaluar la expresión en su totalidad, si una de las expresiones en una comparación disyuntiva es verdadera entonces la expresión es verdadera y falta operar la negación"),
+         answer("Es falsa porque es la negación de una expresión verdadera", correct=TRUE, message="Correcto: Es la negación de una comparación disyuntiva verdadera en la que una componente (dos mayor que raiz de dos) es verdadera") ,
+         answer("Es falsa porque la expresión 3<=(4/12+8/11) | 2>2^(1/2) es falsa",message="La expresion 3<=(4/12+8/11) | 2>2^(1/2) es verdadera, ya que una de las componentes es verdera"),
+         allow_retry = TRUE,
+         random_answer_order = TRUE
+         )
+```
+
+
+_La práctica hace al maestro_, reza el refrán, sigue en esa línea, descubre el potencial de R.
+
+```{r maestro01, exercise=TRUE,exercise.cap="Practica Operadores"}
+
+# Utiliza los operadores aritmeticos +  -  *  /  %%  %/%  ^
+
+#    Convierte kilos a libras, metros a pulgadas
+
+< < Tu Código > > # Convierte Kilos a libras
+
+< < Tu Código > > # Convierte Metros a Pulgadas
+  
+  
+< < Tu Código > > # Imprime la variable original y la conversión
+
+#    Convierte grados farenheit a centigrados
+
+< < Tu Código > > # Convierte Grados Farenheit a Centigrados 
+  
+< < Tu Código > > # Imprime la variable original y la conversión
+  
+#    Determina el indice de masa corporal (IMC) de un grupo de personas  peso/altura^2   
+#  ¿Cual es el fator de ajuste K que debes aplicar para que la formula aplique en unidades britanicas K * libras/pugadas?
+
+< < Tu Código > > # determina el IMC considerando que recibes libras y pulgadas
+
+# Utiliza los operadores logicos  <   >  <=  >=   ==  !=   |  &  !
+
+a<-TRUE;b<-FALSE   # TRUE,FALSE  palabras reservadas en R   
+a|b                # a o b
+< <Tu Código > >   # a y b
+< <Tu Código > >   # no ( a y b)
+< <Tu Código > >   # a y no b
+c<- 2<1 ; d<- 4<5 
+# Ejecuta estos comandos, borra el "#"" al inicio 
+# previamente determina si las expresiones son verdaderas o falsas 
+# a != d
+# (a | d) & (b | c)
+# (a & d) | (b & c)
+# a > b
+# a * d
+# b == a - d
+
+#     Con base en el IMC determina si tiene sobre peso o bajo peso
+#     rango normal de IMC 25-30
+
+< < Tu Código > >    # Crea la variable Condición que sea verdadera si el IMC esta
+                     # en el rango [25,30)
+
+
+```
+
+<div id="maestro01-hint">
+**Recomendación:** \
+1) Identifica las variables \
+2) Establece la formula  
+3) Define nombres que describan el contenido de la variable  
+4) Codifica  
+
+</div>
+
+
+```{r Resumen02, exercise=TRUE,exercise.cap="Resumen",eval=TRUE}
+
+# ¿Que aprendimos? 
+
+# Uso y representación de variables
+# Manejo de operadores aritmeticos y logicos
+# Clases de variables primarias 'Numeric, 'Character','logical' y 'complex'
+# Atributos de una variable 'class' y 'length'
+# Operatividad de la funcion c(. . .), concatenar
+# Graficas basicas de linea (x,y) "plot"" y lineas horizontales "abline""
+
+```
+
+
+```{r Resumen02-solution}
+
+# para la renta
+VP<-10000 
+plazo<-10 
+tasa<-.05
+renta <- VP/((1-(1+tasa)^(-plazo))/tasa)  
+
+# Para pagos al principio del año
+  
+VPf <-  renta*(1+tasa)*((1-(1+tasa)^(-plazo))/tasa)  
+
+# Para los valores de la tasa
+
+  tasa<-c(.0485,.049,.0495,.05,.0505,.051)
+
+# Ejercicio 1.3 (Conversión de grados Kilogramos a Libras)
+  
+  kg<- 79
+  Lb<- kg/0.4535929
+
+# Ejercicio 1.4 (Conversión de Metros a Pulgadas)
+  
+  Altura<- 1.77
+  Pul<- Altura/0.02539999
+  
+# Ejercicio 1.5 (Índice de Masa Corporal)
+  
+  K<- 0.4535929/0.02539999^2
+  
+  BMI<-K * Lb/Pul^2
+  
+# Ejercicio 1.4 (Conversión de grados centígrados a farenheit)
+  
+  Cn<-28
+  Fg<-Cn*(9/5)+32
+  
+  
+# Para el ejercicio del IMC
+
+Condicion<- 25<=IMC & IMC <30
+
+```
+
+## 2. Vectores {data-progressive=TRUE}
+
+En esta sección realizaremos ejercicios con vectores.
+
+* Cómo se expresan y operan con escalares. 
+* Manejo de funciones aplicadas a un vector.
+* Operaciones entre vectores. 
+* Ejemplo aplicado al cálculo de primas de un seguro de vida.
+
+
+### 2.1 Declaración y operación de vectores
+
+En R un vector es un objeto que tiene longitud mayor a uno y contiene elementos de la misma clase.
+
+```{r vec100, exercise.cap="Declaración y operaciones con escalares",echo=FALSE, exercise=TRUE}
+# Declaración, cualquiera de los siguientes comandos son validos para declarar un vector, son útiles para inicializarlos
+
+tasa<-vector("numeric")       # Inicializa el vector numérico "tasa" 
+tasa<-numeric(5)             # Crea un vector númerico de 5 componentes, cada una inicializada en cero
+
+# Asignación de valores
+tasa<-rep(.05,4)              # Modifica el vector tasa, repite el valor .05 4 veces
+tasa<-c(.056,0.058,.054,.059) # Modifica el vector tasa, asigna los valores contenidos en c(. . .)
+
+# operación con escalares
+
+(tasa*2)             # Multiplica cada componente del vector tasas por dos 
+
+(1+tasa)             # Suma 1 a cada Crea componente del vector tasa
+
+
+tasa[2]<- tasa[2]/3             # Modifica la segunda componente
+
+tasa[c(1,3)] <-  tasa[c(1,3)]-c(0.055,0.07)  # Modifica la primera y tercera componente
+
+# Determina el factor de descuento 1/(1+i) para el vector tasa 
+
+FactorDescuento <- < <Tu Código> > 
+
+# Las comparaciones lógicas se realizan componente a componente y entregan un vector lógico
+
+CompTasa<- tasa<=0.057
+CompTasa<- tasa==0.054
+
+# Despliega en pantalla las variables FactorDescuento y CompTasa
+
+< <Tu código> >
+
+
+#    Corre el siguiente código  borra el primer "#" de cada renglón, ejecuta un renglón a la vez
+# a<-c(1,5,3,5,1,7,8) # Crea vector con nombre "a", c(..) es una función de R
+# sum(a)              # Suma componentes del vector a, sum(..) Función de R
+# a<3                 # compara cada componente de a con el valor determinado
+# b<- a>3             # asigna el resultado de la comparación a la variable b
+# sum(a<3)            # <<Tu Comentario>>
+# a[3]                # Tercer componente del vector a, referencia a componentes
+# sum(a[a<3])         # <<Tu Comentario>>
+# sum(a[b])           # <<Tu Comentario>>
+    
+  
+```
+
+```{r duda4000, exercise.cap="Operación de Vectores"}
+question("Cuales son las diferencias entre las expresiones sum(a<3) y sum(a[a<3])",
+         answer("No hay diferencia, son expresiones semejantes",message="si hay diferencia una suma los valores verdaderos de una comparación logica y otra suma los valores de las componentes que dieron verdadero a la comparación logica"),
+         answer("No hay diferencia el resultado es el mismo",message="Si hay diferencia, en este caso el resultado es el mismo debido a que los valores menores a 3 son '1', si modificas las componentes 1 y 5 con un valor de 2 verificaras que el resultado difiere"),
+         answer("La diferencia es que sum(a<3) entrega la suma de los valores de las componentes que son mayores a 3 mientras que sum(a[a<3]) entrega la suma de la comparación logica", message="Incorrecto, la interpretación esta invertida"),
+         answer("La diferencia es que sum(a[a<3]) entrega la suma de los valores de las componentes que son mayores a 3 mientras que  sum(a<3) entrega la suma de la comparación logica",correct=TRUE,message="Correcto, una suma valores lógicos verdaderos y otra suma el valor de esas componentes"),
+         allow_retry = TRUE,
+         random_answer_order = TRUE
+         )
+
+```
+
+
+```{r vec150, exercise.cap="Operaciones entre vectores",echo=FALSE, exercise=TRUE}
+# Operación entre vectores
+  
+VecA<-c(4,2,3,5);VecB<-c(1,3,2,2)
+
+# Cualquier operación aritmética se realizará componente a componente
+# Por ejemplo VecA^VecB  ejecuta 4^1, 2^3, 3^2 y 5^2
+
+paste("Eleva el vector A a la potencia del vector B", VecA^VecB)
+
+# En este caso la clase tanto de VecA como de VecB es numérica y si bien cada variable tiene cuatro
+# componentes, cada una de ellas está considerada de forma independiente
+# por otra parte el operador %*% representa el producto punto o producto escalar entre vectores.
+
+
+
+paste("Producto punto del Vector A * Vector B",VecA%*%VecB)
+
+paste("Comparación logical del producto punto ", VecA%*%VecB == VecB%*%VecA)
+  
+```
+
+###  2.2 Operación con componentes de vectores
+
+Es factible operar con componentes específicos de un vector, así como realizar búsquedas y comparaciones lógicas entre componentes. 
+
+```{r vec200, exercise.cap="Operaciones entre vectores", exercise=TRUE}
+
+# Retomemos los vectores VecA y VecB 
+
+VecA<-c(4,2,3,5);VecB<-c(1,3,2,2)
+
+
+# Para referenciar la componente i del vector VecA
+
+VecA[3]          # Despliega la tercera componente del vector VecA
+VecB[2:4]        # Despliega la segunda, tercera y cuarta componente del vector VecB
+VecA*VecB[3:4]   # Multiplica el Vector VecA por la tercera y cuarta componente de VecB
+                 # como la longitud de VecB[3:4] es menor que VecA, recicla las componentes 
+                 # de VecB hasta completar la longitud de VecA
+(VecA*VecB)[3:4] # Despliega la tercera y cuarta componente del vector VecA*VecB
+
+which(VecB==2) # Identifica las componentes del Vector B igual a 2
+
+# Realiza los siguientes ejercicios
+
+< < Tu Código > > # Resta 2 unidades de las componentes del vector A mayores a 3
+
+< < TU Código > > # Multiplica por 3 los componentes del vector B que son diferentes de 2  
+ 
+```
+ 
+
+
+```{r duda05, exercise.cap="Comprensión"}
+question("Dado que A<-c(4,8,12,20) B<-c(3,,9,11,2) C<-c(1,0,-4,7) cuales de las siguientes expresiones son válidas, sin modificar el contenido de los vectores, marca todas las expresiones válidas ",
+         answer("D<-C[A<=B]",correct=TRUE,message="Regresa el componente de C en los que el componente de A es menor que el de B.   "),
+         answer("D<- A U B ", message="No hay ninguna instrucción o función en el comando el simbolo U es tomado como una variable.  "),
+         answer("D<-c(A,B,C)", correct=TRUE,  message="Concatena los tres conjuntos.  "),
+         answer("D<-C(A,B)",message="Los paréntesis redondos de utilizan para llamar una función, la función C no existe.  "),
+         answer("D<-C[A,B]",message="El vector C solo tiene una dimensión, el llamado [A,B] hace referencia a una matriz.  "),
+         
+         allow_retry = TRUE,
+         random_answer_order = TRUE
+         )
+
+```
+
+```{r duda5010, exercise.cap="Comprensión"}
+question("Dados los vectores A<-c(a1,a2,a3,a4) D<-c(d1,d2) R<-c(r1,r2) cuales son expresiones validas para que el vector D opere como un factor de descuento a las primeras dos componentes de A y el vector R opere como un recargo a las ultimas componentes de A, al vector S se le asigna la solución, marca todas las expresiones válidas ",
+         answer("S<-A*c(1-D,1+R)",correct=TRUE,message="Integra un vector de descuentos y recargos de cuatro componentes y lo opera con A ....."),
+         answer("S<-A[1:2]*(1-D)+A[3:4]*(1+R)", message="Este comado genera un vector de 2 componenetes que suma las dos primera componentes de A descontadas por D y los ultimas dos recargadas por R....."),
+         answer("S<-c(A[1:2]*(1-D),A[3:4]*(1+R))",correct=TRUE, message="Determina las componentes de A con descuento y recargo y las combina en un vector de 4 componenetes....."),
+         answer("S <- c(A[1]*(1-C[1]),A[2]*(1-C[2]),A[3]*(1+R[1]),A[4]*(1+R[2]))", correct=TRUE,  message="Cada componente de A se afecta por el descuento/recargo correspondiente....."),
+         answer("S<-c(A[1:2]*D),A[3:4]*R))",message="No determina los factores de descuento / recargo....."),
+         allow_retry = TRUE,
+         random_answer_order = TRUE
+         )
+
+```
+
+### 2.3 Funciones aplicadas a Vectores
+
+Una función es un llamado a un algoritmo que recibe una serie de parámetros (argumentos), los opera y entrega un resultado específico. R tiene una gran cantidad de funciones predefinidas y muchas de ellas pueden recibir como argumentos vectores, de hecho, esta es una de las ventajas de R.  
+
+Para llamar a una función la sintaxis es: NombreFuncion(parámetros, . . )
+
+
+```{r Vec110,exercise=TRUE,exercise.cap="Funciones básicas de R"}
+# Referente a las funciones cada tiene su propia salida y puede ser un número, vector o matriz
+
+tasa<-rep(.04,10)       # rep : Crea un vector numérico de 10 componentes, cada una con el valor de .05
+FactorTasa<-1/(1+tasa)  # 
+
+Sumatoria<- sum(c(FactorTasa,tasa))  # sum : Entrega la suma de los componentes de los vectores FactorTasa y Tasa 
+Producto<-prod(FactorTasa)           # prod :   Regresa el producto de todos los componentes del vector FactorTasa
+Acumulado<-cumprod(FactorTasa)       # cumprod : entrega un vector con la sucesión de productos acumulados hasta cada componente
+
+# Retomando elejercicio del valor presente
+
+tasa <- .04 ; plazo <- 10
+
+Vectasa<-1/(1+rep(tasa,plazo))
+
+# Con el vector Vectasa, utiliza las funciones sum y cumprod para obtener el valor presente
+# compáralo con el valor de la formula
+
+VPvec <- <<Tu código>>                 # Valor presente con funciones
+
+VPfor <-  (1-(1+tasa)^(-plazo))/tasa
+
+paste("Vectores ",VPvec,"  formula ",VPfor)
+
+VPvec == <<Tu código>>  # comparar resultados
+
+# Otras funciones 
+  
+VecA<-c(4,2,3,5)
+
+AMax<-max(VecA)                   # max   : Valor máximo de un vector
+AMin<-min(VecA)                   # min   : Valor máximo de un vector
+AMed<-mean(VecA)                  # mean  : Media/Promedio de un vector
+Orden<-rank(VecA)                 # rank  : Vector de número de componente ordenados por su valor
+Cual<-which(VecA<mean(VecA))      # which : componentes que cumplen una condición lógica
+
+
+# Realiza los siguientes ejercicios
+
+VecB<-c(1,3,5,2)
+
+< < Tu Código > >  # Componentes del Vector A que son menores a los componentes del vector B 
+< < Tu Código > >  # Máximo del producto de los vectores
+< < Tu Código > >  # Diferencia del máximo del vector a y B
+```
+
+
+### 2.4 Construcción de un modelo de Pricing 
+
+Hasta aquí hemos revisado la operatividad básica de R: generar y operar variables, utilizar funciones básicas y manejar vectores, ahora vamos a integrar estos bloques para desarrollar nuestro primer modelo actuarial.
+
+Un modelo para calcular **la prima de tarifa** (Modelo de Pricing determinista) de un seguro de vida. Recordemos que es determinista porque todos los parámetros están dados y producen los mismos resultados, no hay ningún componente aleatorio.
+
+El primer elemento de nuestro modelo es la **tabla de mortalidad**,   para este ejercicio tomaremos la tabla de experiencia mexicana *2000 Individual* publicada por la Comisión Nacional de Seguros y Fianzas(CNSF).
+
+Como paso inicial recuperaremos los valores de la qx de un archivo externo tipo *.csv para posteriormente operar sus componentes y reflejar las condiciones del negocio, como son descuentos en edad, recargos por subnormalidad y descuentos por factores de selección.
+
+Vamos a utilizar una estructura de datos con la que debemos familiarizarnos, **"data frame"** Esta corresponde a un archivo en otros lenguajes, donde cada renglón contiene una observación y cada columna una variable.
+
+
+```{r Vec299, echo=FALSE,exercise.cap="Carga de la Tabla de mortalidad"}
+x<-"Edad,CNSF2000I\n12,0.4\n13,0.43\n14,0.46\n15,0.5\n16,0.53\n17,0.58\n18,0.62\n19,0.67\n20,0.72\n21,0.77\n22,0.83\n23,0.9\n24,0.97\n25,1.04\n26,1.12\n27,1.21\n28,1.3\n29,1.4\n30,1.51\n31,1.62\n32,1.75\n33,1.88\n34,2.03\n35,2.19\n36,2.35\n37,2.54\n38,2.73\n39,2.94\n40,3.17\n41,3.41\n42,3.67\n43,3.95\n44,4.26\n45,4.59\n46,4.94\n47,5.32\n48,5.73\n49,6.16\n50,6.64\n51,7.15\n52,7.69\n53,8.28\n54,8.92\n55,9.6\n56,10.33\n57,11.12\n58,11.97\n59,12.88\n60,13.86\n61,14.91\n62,16.05\n63,17.27\n64,18.57\n65,19.98\n66,21.49\n67,23.11\n68,24.85\n69,26.72\n70,28.72\n71,30.87\n72,33.18\n73,35.65\n74,38.3\n75,41.14\n76,44.17\n77,47.42\n78,50.9\n79,54.62\n80,58.59\n81,62.83\n82,67.36\n83,72.19\n84,77.34\n85,82.82\n86,88.65\n87,94.85\n88,101.44\n89,108.42\n90,115.83\n91,123.68\n92,131.97\n93,140.74\n94,149.98\n95,159.72\n96,169.97\n97,180.73\n98,192.02\n99,203.84\n100,1000\n101,NA\n102,NA\n103,NA\n104,NA\n105,NA\n106,NA\n107,NA\n108,NA\n109,NA\n110,NA\n"
+
+TablaMx <- read_csv(x)
+```
+
+
+```{r Vec300, exercise=TRUE,exercise.cap="Carga de la Tabla de mortalidad",exercise.setup="Vec299"}
+
+# Para cargar la tabla de mortalidad ejecutaremos el comando
+
+TablaMx <- read_csv(x)
+
+# Este comando recupera el  archivo tipo CSV y crea el objeto "TablaMx"
+# 
+# Utiliza la funcion str( ...) para conocer la estructura del objeto TablaMx 
+
+< < Tu Código > > 
+
+```
+
+<div id="Vec300-hint">
+**Hint:** Sintaxis str(TablaMx) 
+
+str(TablaMx)  
+Regresa la estructura del objeto TablaMx  
+
+'data.frame':	89 obs. of  2 variables:  
+ $ Edad: int  12 13 14 15  ...  
+ $ qx  : num  0.000396 0.000427 0.00046 0.000495 ...  
+ 
+ En este caso podemos identificar que es del tipo data.frame que son 89 observaciones de 2 variables.  
+ La primera "Edad" es entero   - muestra los primeros valores  
+ La segunda   "qx" es numerica - muestra los primeros valores  
+ Nota que cuando despliega las variables considera el carácter "\$" al inicio,  
+ Puedes acceder a estas variable con cualquiera de estas sintaxis:   
+ TablaMx\$Edad o TablaMx[ ,1] para Edad y  
+ TablaMx\$qx   o TablaMx[ ,2] para qx  
+ Para acceder a la información por renglón la sintaxis es TablaMx[1, ]  
+</div>
+
+
+El objeto TablaMx  esta compuesto
+
+
+<style type="text/css">
+.table {
+
+    width: 40%;
+}
+</style>
+
+|Renglón/Columna|Edad|qx|
+|---|:---:|---:|
+|1|12|0.000396|
+|...|...|...|
+| 89|100|1.000000|
+
+Notesé que la información correspondiente a la edad 12 esta incluida en el renglón 1 y la de edad 100 en el renglón 89.
+
+Vamos a practicar con esta tabla las siguientes operaciones:
+
+- Extracción de valores: recuperar en una variable la información de una columna o de uno de sus segmentos.
+- Modificar valores: alterar el parámetro de una variable o uno de sus segmentos.
+- Establecer criterios de búsqueda: identificar el componente de un vector que cumple con un criterio determinado.
+
+
+```{r Vec310, exercise=TRUE,exercise.cap="Operaciones con Vectores: Extracción de valores", exercise.setup="Vec299", class.source="bg-success"}
+
+
+# Primero unos ejemplos para recuperar valores:  
+
+TablaMx[10:15, ] # Muestra la información del renglón 10 al 15 de ambas  variables
+print(c("qx  70:80 Matricial  ",TablaMx[70:80,2]) ) # Muestra información de qx del renglón 70 al 80 con sintaxis matricial
+print(c("qx  Registros 70:80 Directa ",TablaMx$qx[70:80])) # Muestra información de qx del renglón 70 al 80 por referencia directa
+print(c("Edad  registros 10:15 Matricial  ",TablaMx$Edad[10:15])) # Muestra información de Edad del  renglón 10 al 15, con esta sintaxis no es necesario hacer referencia a la columna
+
+# Ejercicios de recuperación de información
+< < Tu Código > > # Recupera qx del renglón 30 al 40
+< < Tu Código > > # Recupera qx para las edades 30 al 40
+< < Tu Código > > # Recupera ambas variables para el grupo de edades (35,40,45, 50)  
+```
+  
+```{r Vec312, exercise=TRUE,exercise.cap="Operaciones con Vectores: Modificación de valores", exercise.setup="Vec299"}
+    
+# La estructura y valores del objeto TablaMx puede modificarse
+# recuerda estamos trabajando con un objeto en R no con el archivo CSV
+  
+    
+# Podemos crear una variable e incluirla en el Data Frame
+# Crea la variable px con el valor de 1 - TablaMX$qx
+
+< < Tu Código > > 
+  
+# Para incluirla en el Data Frame
+
+  TablaMx$px <- px
+
+# Para incluir un renglón: Digamos el renglón 90 con la información Edad=104, qx = .82  px=.18
+
+TablaMx[90, ] <- c(104,0.82,0.18)
+
+# Si ahora consultamos la estructura del objeto TablaMx  
+# Constataremos que ha cambiado
+
+str(TablaMx)
+
+
+# Para modificar un valor podemos referenciar las variables de alguna de estas formas
+
+TablaMx[90,] <- c(108,0.9,0.1)   # Modifica todo el registro 90
+TablaMx$Edad[90] <- 110          # Modifica la componente 90 de la variable TablaMx$Edad
+TablaMx[90,2:3] <- c(.75,.25)    # Modifica las componentes 2 y 3 del registro 90
+
+# Para borrar un registro
+TablaMx <- TablaMx[-90,]        # Elimina el renglón 90
+
+# Ejercicios de transformación de un Data Frame
+
+< < Tu Código > >  # Recarga la tabla de mortalidad de edades 30:40 con el 20% de subnormalidad
+
+< < Tu Código > >  # Con base a la variable qx generan una qx segregada por genero
+                   # para mujeres x=x-3  hombres x=x+2
+< < Tu Código > >  # Determina la px en cada caso
+  
+< < Tu Código > >  # genera un vector de qx con de edad quinquenales %/% 
+  
+< < Tu Código > >  # Calcula la qx promedio en el rango 30 34
+
+```
+  
+```{r Vec314, exercise=TRUE,exercise.cap="Operaciones con Vectores: Criterios de Busqueda", exercise.setup="Vec299"}
+    
+  
+# Es factible buscar componentes que cumplen con un criterio  
+which(TablaMx$Edad %in% c(40,33,57))
+
+# Regresa el número de renglón en el que la variable TablaMx$Edad toma los valores 40,33 y 57
+
+TablaMx[which(TablaMx$Edad %in% c(40,33,57)),]
+
+# Ejercicios de búsqueda 
+
+< < Tu Código > >  # qx en la edad mínima del siguiente conjunto de edades c(23,45,73,54,40,19,56,31)
+
+< < Tu Código > >  # qx en las edades que son divisibles entre tres del siguiente conjunto de edades c(36,45,73,54,40,19,56,31)
+
+
+
+```
+
+### 2.5 Otros elementos del modelo
+
+Complementario al supuesto de mortalidad, requerimos otros elementos para determinar la prima que debe pagar el contratante, entre ellos:
+
+i) Tasa de interés técnica.
+ii) Gastos de adquisición.
+iii) Gastos de administración, entro otros.
+
+Incorporaremos estos parámetros mediante asignaciones directas a las variables.
+
+
+```{r Vec499, echo=FALSE,exercise.cap="Carga parámetros tecnicos",exercise.setup="Vec299"}
+
+TablaMx <- read_csv(x)
+
+TablaMx$px<-1-TablaMx$qx  # Incluye la variable px en la tabla de mortalidad
+
+Vecqx<-numeric()   # Inicializa la variable Vecqx como vector
+
+Veckpx<-numeric()  # Inicializa la variable Veckpx como vector
+
+Edad<-40           # Edad de asegurado tipo
+
+tasa<-0.04         # Tasa técnica
+
+# Generaremos un vector con los factores de descuento acumulados por año
+
+Vectasa <- cumprod( c(1 , rep(1/(1+tasa),(89-Edad+11+1))) ) 
+
+Vecqx<-TablaMx$qx[(Edad-11):89]  # 
+
+Veckpx<-cumprod(c(1,TablaMx$px[(Edad-11):(89-1)]))
+
+PriesgoNumerador <- (Vecqx*Veckpx) %*% Vectasa[2:(1+length(Vecqx))]
+
+PriesgoDenominador <-(Veckpx %*% Vectasa[1:(length(Vecqx))])
+
+PrimaRiesgo <- (tasa/log(1+tasa))*(PriesgoNumerador/PriesgoDenominador)
+
+```
+
+### 2.6  Prima de Riesgo y Prima de Tarifa
+
+#### Prima de Riesgo
+
+En esta sección se determina el monto necesario para pagar las obligaciones derivadas de la ocurrencia del riesgo de muerte, en un seguro ordinario de vida para una persona de 40 años, considerando una tasa técnica del 4%.
+
+El algoritmo se basa en las siguientes expresiones y en la operatividad de vectores, en particular, en el producto punto y producto estándar.
+
+$P_x=A_x/$ $\ddot{a}_x$  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  En donde &nbsp; &nbsp; &nbsp; $A_x = \displaystyle\sum_{k=0}^\infty  v^{k+1} {_k}p_x q_{x+k}$; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  $\ddot{a}_x=\displaystyle\sum_{k=0}^\infty v^x {_k}p_x$ 
+
+$$ 
+\begin{aligned}
+ Donde: &P_x \space\space \text{Prima a edad x} \\
+ &A_x \space\space \text{Prima neta única de un seguro de vida a edad x} \\
+ &\ddot{a}_x \space\space \text{  Anualidad contingente anticipada a edad x   } 
+\end{aligned}
+$$
+
+Si $X=(x_1,x_2,\dots,x_n)$  y $Y=(y_1,y_2,\dots,y_n)$  entonces:  
+Producto punto:&nbsp; &nbsp; $X$\%*\%  $Y$=$x_1*y_1+\dots+x_n*y_n$  
+Producto estándar:  $X$\*$Y$=($x_1*y_1,\dots,x_n*y_n)$
+
+Por lo que una vez definidos los vectores la operatividad se reduce a obtener su producto estándar y producto punto
+ 
+
+
+```{r Vec600, exercise=TRUE, exercise.cap="Calculo de la prima de riesgo", exercise.setup="Vec499"}
+# Revisemos las variables precargadas Vecqx,Veckpx y Vectasa
+
+print(c(" Vecqx  ",head(Vecqx,3),tail(Vecqx,3))) # ejemplo de opción para imprimir la variable Vecqx. 
+# La función head() despliega las primeras "n" componentes de un vector/matriz/DataFrame, tail() despliega las ultimas "n"
+
+< < Tu Código > >  # Imprime las primeras y ultimas 5 componentes de Veckpx
+
+< < Tu Código > >  # Imprime las primeras y ultimas 2 componentes de Vectasa
+  
+# En este algoritmo el plazo de seguro no es una variable explicita, 
+# esta implicita en la longitud de los vectores Vecqx,Veckpx y Vectasa en el numerador
+
+PriesgoNumerador <- (Vecqx*Veckpx) %*% Vectasa[2:(1+length(Vecqx))]
+
+# De la misma forma que el plazo de seguro, el plazo de pago esta implícito en la longitud de los vectores Veckpx y Vectasa en el denominador 
+
+PriesgoDenominador <-(Veckpx %*% Vectasa[1:(length(Vecqx))])
+
+PrimaRiesgo <- (tasa/log(1+tasa))*(PriesgoNumerador/PriesgoDenominador)
+
+PrimaRiesgo
+
+# Modifica la edad a un valor entre 45 y 55 y calcula nuevamente la prima de riesgo
+# Complementa los espacios en blanco del siguiente código con funciones o variables según corresponda: 
+#  tasa,Edad,Vecqx,cumprod. El valor resultante de la prima de riesgo a edad 35 debe ser 0.01157104  
+
+  Edad<-35  # Modifica el valor de la variable edad
+  
+  Vectasa <- cumprod( c(1 , rep(1/(1+_______),(89-Edad+11+1))) ) 
+
+  Vecqx<-TablaMx$qx[(____-11):89]  # 
+
+  Veckpx<-_________(c(1,TablaMx$px[(Edad-11):(89-1)]))
+
+  PriesgoNumerador <- (______*Veckpx) %*% Vectasa[2:(1+length(Vecqx))]
+
+  PriesgoDenominador <-(Veckpx %*% ______[1:(length(Vecqx))])
+
+  PrimaRiesgo <- (tasa/log(1+_____))*(PriesgoNumerador/PriesgoDenominador)
+
+  PrimaRiesgo  
+
+```
+
+Para determinar la prima de tarifa debemos incluir los supuestos de gastos de administración, adquisición y comisiones, estableciendo una comisión nivelada, considerando que las comisiones se pagan en diferentes años. Seguimos operando con vectores.  
+
+```{r Vec640, exercise=TRUE, exercise.cap="Calculo de la prima de tarifa", exercise.setup="Vec499"}
+
+SAP<-2000000       # Suma asegurada promedio
+
+Gadminfijo <- 1500/SAP   # Gastos de administración fijo 
+
+Gadminvar <- .07         # Gastos de administración variables
+
+Comis <- c(0.50,0.25,0.15,rep(0.03,length(Vecqx)-3))
+
+Gadq <- (Comis* Veckpx) %*%  Vectasa[1:(length(Vecqx))]/(Veckpx %*%  Vectasa[1:(length(Vecqx))]) 
+
+PrimaTarifa <- (PrimaRiesgo + Gadminfijo) / (1 - Gadminvar - Gadq)
+
+(PrimaTarifa*1000)
+
+# Cambia los componentes del vector de comisiones a quedar:
+# Primer año      40%
+# Segundo año     30%
+# Tercer año      20%
+# Cuarto año      10%
+# Quinto año y +   5%
+
+< < Tu Código > >
+
+# Calcula nuevamente la prima de tarifa
+
+< < Tu Código > >
+
+```
+
+#### Variaciones a la Prima de Tarifa
+
+En la práctica estos algoritmos pueden tener variaciones, dependiendo de los estándares que maneje cada compañía, dentro de las 
+variaciones más comunes tenemos:
+
+- **Inclusión de un margen de utilidad**: Se puede representar como el porcentaje de las primas que corresponde al costo de oportunidad que tiene el accionista por aportar el capital para realizar el negocio, costo que de entrada debe ser mayor a la tasa libre de riesgo y recoger el riesgo implícito en el negocio. 
+
+- **Inclusión de supuestos de persistencia**. Es el número de pólizas que desde el inicio del periodo pagan la prima correspondiente y, por lo tanto, están en riesgo durante el periodo de vigencia. 
+
+- **Inclusión de factores de selección**. Son factores que afectan la tasa de mortalidad del primer y segundo año, considerando que el proceso de selección de riesgos tiene un efecto positivo en el portafolios. Dependiendo de qué tan adecuado sea el proceso de selección, será el nivel de descuento que se otorga.
+
+¿Cual es la sensibilidad de las tarifas a estas variaciones?, veamos: 
+
+
+```{r Vec650, exercise=TRUE, exercise.cap="Variaciones de la Prima de tarifa", exercise.setup="Vec499"}
+
+# Variaciones para el Margen de Utilidad
+
+MargenU <- .05
+
+# Cada compañía tiene sus criterios para determinar el margen de utilidad, desde como 
+# determinan el capital asignado al negocio de vida hasta su apetito de riesgo
+
+# Variaciones para Persistencia/Caducidad
+
+Caducidad <- c(0.32,0.20,0.08,0.04)
+
+Persis <- c(1,1-Caducidad)
+
+# Los porcentajes de caducidad varían con base al tipo de plan y forma de pago; se ha observado que la caducidad de las pólizas con un componente de ahorro es menor que la de las pólizas que sólo tienen el componente de protección.
+
+# Variaciones para factores de selección
+
+FacSel <- c(0.4,0.2)  # Selección completa
+
+DesSel<- 1- FacSel
+
+# Los factores de selección modifican la siniestralidad esperada en los primeros años de vigencia de la póliza, ya que hay un efecto positivo al evaluar las condiciones del riesgo, dependiendo de cuán riguroso pueda ser el proceso de selección, ya que puede haber planes con procesos simplificados, donde los descuentos por selección son pequeños, o bien planes con selección completa de riesgos, cuyos factores son más significativos.
+
+# Primero un ejemplo sin variaciones
+
+PrimaRiesgoSin <- (tasa/log(1+tasa))*(PriesgoNumerador/PriesgoDenominador)
+
+print(c("Prima de riesgo edad 40  ",PrimaRiesgoSin))
+
+# Ahora incluyendo variaciones
+
+# -------------------------------------------------------
+#  Persistencia
+
+if (length(Persis)<length(Veckpx)) {
+   ultimo<-tail(Persis,1)
+   Persis<-c(1,Persis,rep(ultimo,length(Veckpx)-length(Persis)-1))
+}
+
+Vecpersis <-cumprod(Persis) 
+
+Veckpxp <- Veckpx * Vecpersis
+
+PriesgoNumeradorP <- (Vecqx*Veckpxp) %*% Vectasa[2:(1+length(Vecqx))]
+
+PriesgoDenominadorP <-(Veckpxp %*% Vectasa[1:(length(Vecqx))])
+
+PrimaRiesgoP <- (tasa/log(1+tasa))*(PriesgoNumeradorP/PriesgoDenominadorP)
+
+# -------------------------------------------------------
+# Con factores de selección
+
+Vecqx[1:2]<-Vecqx[1:2]*DesSel
+
+PriesgoNumeradorS <- (Vecqx*Veckpx) %*% Vectasa[2:(1+length(Vecqx))]
+
+PriesgoDenominadorS <-(Veckpx %*% Vectasa[1:(length(Vecqx))])
+
+PrimaRiesgoS <- (tasa/log(1+tasa))*(PriesgoNumeradorS/PriesgoDenominadorS)
+
+paste("Prima de riesgo sin variaciones ",PrimaRiesgo,"   con Persistencia  ",PrimaRiesgoP,"   Con Factores de Selección",PrimaRiesgoS)
+
+paste("Sensibiliad  % VarPer / SinVar ",PrimaRiesgoP/PrimaRiesgo,"   %VarFac/SinVar ",PrimaRiesgoS/PrimaRiesgo)
+
+# Determina la prima de riesgo considerando las variaciones por persistencia y factores de selección
+
+< < TU Código > >
+  
+# Recalcula la tarifa con las variaciones de persistencia, considera los factores de caducidad al 50%
+  
+< < Tu Código > >  
+
+```
+
+
+### 2.5.2 Reserva, Valores en efectivo y Rescates
+
+En este ejercicio calcularemos las reservas de una póliza para un año especifico, no determinaremos el efecto de las reservas sobre las primas, ya que para ello necesitaríamos establecer el requerimiento de capital y un objetivo de rentabilidad.
+
+A pesar de que no revisaremos la interacción de las reservas con las primas si es relevante tener presente las siguientes consideraciones conceptuales.
+
+Si bien las reservas pueden considerarse independientes del ejercicio de pricing, ya que incluso se calculan con una tabla de mortalidad recargada y una tasa de interés más baja,  tienen un efecto considerable en el requerimiento de capital, la utilidad esperada y por lo tanto en la rentabilidad del plan, como consecuencia deben incluirse en la construcción de un producto.
+
+El plazo de seguro y el objetivo de compra de la póliza determinan el horizonte de inversión e influyen en el comportamiento del asegurado, en cuanto a ejercer las diferentes opciones implícitas en la póliza, lo anterior conforma la estructura de las reservas y es un factor relevante para el calculo del capital requerido en la operación de vida.
+
+Asi mismo el patrón de desarrollo de las reservas puede representar un problema de liquidez cuando se presenta una discrepancia temporal entre flujos de entrada y de salida en los casos que los flujos de salida son mayores, ya que la empresa debe compensar la diferencia con capital. 
+
+Por último hay que considerar que la cancelación anticipada de las pólizas representa una fuente de ingresos, debido a los cargos por rescate. 
+
+Nos valdremos de la siguiente expresión para determinar la reserva al año t:
+
+$_{t}V_x = A_{x+t} - P_x\ddot{a}_{x+t}$
+
+Y utilizaremos nuevamente la solución vectorizada
+
+```{r Vec700, exercise=TRUE, exercise.cap="Valores en Efectivo", exercise.setup="Vec499"}
+   
+  Rva<-numeric()                  # Inicializa la variable Rva Reserva
+   
+  t<-10    # Año póliza en el que se calculara la reserva
+
+  Vecqx<-TablaMx$qx[(Edad-11+t):89] 
+
+  if (t<60) Veckpx<-cumprod(c(1,TablaMx$px[(Edad-11+t):(89-1)])) else    Veckpx<-1
+  
+  PriesgoNumerador <- (Vecqx*Veckpx) %*% Vectasa[2:(1+length(Vecqx))]   # Equivale a A x+t
+  
+  PriesgoDenominador <-(Veckpx %*% Vectasa[1:(length(Vecqx))])        # Equivale a x+t 
+  
+  Rva<- PriesgoNumerador - PrimaRiesgo*PriesgoDenominador
+
+   (Rva)
+   
+   # Ejecuta el código para los siguientes vaores de t  3,7,15,20 y 30
+   
+```
+
+Con esto llegamos a la conclusión del segundo apartado y es tiempo de hacer un recuento de lo conceptos que se presentan en este capitulo
+
+```{r Resumen03, exercise=TRUE,exercise.cap="Resumen",eval=TRUE}
+
+# ¿Que aprendimos? 
+
+# En la sección DECLARACIÓN DE VECTORES Y OPERACIÓN CON ESCALARES
+#               - Como declarar un vector
+#               - Como opera un vector y un escalar, 
+#               - Comparaciones lógicas entre un vector y un escalar
+# En la sección MANEJO DE FUNCIONES
+#               - Operatividad de las funciones "sum","prod","cumprod","max"
+# En la sección OPERACION ENTRE VECTORES
+#               - Operaciones aritméticas entre vectores
+#               - Comparaciones lógicas entre vectores
+#               - Producto punto
+#               - Referencia a una o un rango de componentes
+# En la sección CALCULO DE PRIMAS
+#               - Recuperamos un archivo externo con formato .CSV
+#               - Utilizamos la clase de variable "DATA FRAME"
+#               - Operatividad de la función str - estructura de una variable
+#               - Modificamos la estructura de un DATA FRAME, añadimos, eliminamos 
+#                 y modificamos columnas (variables) y renglónes (registros)
+#               - Utilizamos la función which y el operador %in%
+#               - Utilizamos elementos de R para calcular la prima de riesgo y de tarifa para una edad determinada
+#               - Uso de las funciones head y tail para desplegar los primero y últimos componentes de un objeto
+```
+
+
+```{r Resumen03-solution}
+
+# En la sección DECLARACIÓN DE VECTORES Y OPERACIÓN CON ESCALARES
+#               -
+# En la sección MANEJO DE FUNCIONES
+#               
+   VPvec<- sum(cumprod(Vectasa))   # Valor presente con funciones
+   VPvec == VPfor
+   
+# OPERACION ENTRE VECTORES
+#    
+ VecA[VecA>3]<-VecA[VecA>3]-2
+ 
+ VecB[VecB!=2]<-VecB[VecB!=2]*3
+ 
+which(VecA<VecB) # Componentes del Vector A menores que las del vector B 
+max(VecA*VecB)  # Maximo del producto de los vectores
+max(VecA)-max(VecB)  # Diferencia del maximo de  los vectores
+ 
+# En la sección CALCULO DE PRIMAS
+#               - Recuperamos un archivo externo con formato .CSV
+# 
+# En la sección Practica Complementaria
+TablaMx$qx[18:28]<-TablaMx$qx[18:28]*1.2 # Recarga la tabla de mortalidad de edades 30:40 con el 20% de subnormalidad
+  
+qfem<-TablaMx$qx[ifelse (rank(TablaMx$qx)-3<1,1,rank(TablaMx$qx)-3)]  # Con base a la variable qx generan una qx segregada por genero para mujeres x=x-3  hombres x=x+2
+qmas<-TablaMx$qx[ifelse (rank(TablaMx$qx)+2>89,89,rank(TablaMx$qx)+2)]
+                  
+pfem<-1-qfem;pmas<-1-qmas # Determina la px en cada caso
+  
+Edadq<-TablaMx$Edad%/%5 # genera un vector de edad quinquenales %/%  
+ 
+mean(qfem[Edadq==6])# Calcula la qx promedio en el rango 30 34
+mean(qmas[Edadq==6])
+
+TablaMx$qx[min(Conjunto)-11]
+
+TablaMx[Conjunto[which(Conjunto%%3==0)]-11,]
+```
+
+## 3. Estructuras de control {data-progressive=TRUE}
+
+### **Preámbulo**
+
+En esta sección vamos a utilizar los comandos de R que nos permiten modificar el flujo de ejecución de un algoritmo, ya sea condicionando o repitiendo un bloque de instrucciones.
+
+Revisaremos los comandos más comunes, posiblemente surgirán ideas para desarrollar algoritmos alternativos de solución a diferentes problemas actuariales; considera que los ejemplos están desarrollados para mostrar el uso del comando y no cumplen necesariamente con el rigor técnico de un curso de cálculo actuarial.
+
+En seguros de vida un *Cash Flow* es un modelo de proyección de los flujos financieros esperados en una póliza, esto es, un estado de resultados donde se identifica cada uno de los componentes de la póliza. El uso más generalizado de este modelo sirve para determinar la rentabilidad de la compañía, aunque también puede conocerse el valor que le genera al asegurado.
+
+En el modelo que vamos a construir cada renglón representa un año y cada columna es un concepto (variable), en este ejercicio vamos a realizar las proyecciones anualmente, una sofisticación es que cada renglón represente un mes.
+
+
+
+### 3.1 Funciones if .. else / ifelse
+
+Su objetivo es condicionar la ejecución de un bloque de código a que una sentencia sea verdadera o falsa
+
+Existen dos modalidades de la instrucción una para vectores (de longitud n) y otra para variables unitarias (de longitud 1).
+
+Su sintaxis es:
+
+Para vectores: ifelse (condición, verdadero, falso)
+Para variables unitarias: if (condición) verdadero else falso
+
+Para variable unitarias se puede omitir la sección de falso
+
+```{r control01, exercise=TRUE, exercise.cap="Comandos de control de flujo"}
+
+# Consideremos los vectores
+
+VecA<-c(4,2,3,5);VecB<-c(1,3,2,2)
+
+VecC<-ifelse (VecB<=VecA,10,3) # Nota como el resultado es un vector 
+
+# Escribe un código en que identifique los números pares del Vector A
+# en caso afirmativo ejecuta lo siguiente, si son menores o iguales
+# a 3 eleva em componente al cubo, en caso contrario toma la raíz cuadrada
+# en caso de que sean nones, si son menores a 3 toma su logaritmo 
+# en caso contrario su exponente
+
+< < Tu Código > >
+  
+# Verifica el resultado de la siguiente instrucción
+  
+  VecC<-if(VecB<=VecA) 10 else 3
+
+# Lo anterior aplica si cualquiera de los parámetros de la condición tiene longitud mayor a 1, el siguiente ejemplo sigue marcando una advertencia
+
+  VecC<-if(VecB[4]<=VecA) 10 else 3
+
+# sin embargo el resultado si puede ser un vector de cualquier clase
+  
+  VecC<-if(VecB[4]<=VecA[1]) c(10,8,7,4) else c("silla","mesa")  
+
+# tanto en if como en ifelse es factible que los resultados sean un conjunto de instrucciones
+
+if(VecB[4]<=VecA[1])  # En este caso se debe indicar el paquete de instrucciones entre corchetes
+{
+  VecB[3]<-log(VecA[3])
+  VecB[2]<-min(VecA)
+} else   # Posicionar "else" al cerrar el corchete de la condición verdadera
+{
+  VecB[1]<-VecA[2]*VecB[2]
+  VecB[4]<-VecA[1]/VecB[1]
+}    
+
+```
+### 3.2 función **for** 
+
+Esta función sirve para repetir hasta  cierto número de veces una parte del código.
+
+Su sintaxis es **for** (var in lista) {expresión} donde
+**var** es la variable que cambia dentro del bloque del código entre los corchetes, 
+**lista** un conjunto de elementos de R, que puede ser una secuencia de números o elementos de un conjunto no necesariamente numérico y 
+**expresión**, un grupo de instrucciones de R que se repite.
+
+
+```{r control02, exercise=TRUE, exercise.cap="Comando for"}
+# A continuación un par de ejemplos donde se utiliza el comando for
+
+# Ejemplo 1, determinar excedente por un plazo determinado
+
+# Datos
+plazoseguro<-10;tasa<-.05;PmaNeta<-1000;Beneficios<-750
+
+# Ciclo -- for --
+for (i in 1:plazoseguro) 
+    {   # Inicia el ciclo
+    if (i>1) {
+              Excede[i]<-Excede[i-1]*(1+tasa)+(PmaNeta-Beneficios)*(1+tasa/2)
+             } else
+       {Excede[i]<-(Excede-Beneficios)*(1+tasa/2)}
+    }   # Termina el ciclo
+
+Excede   # Presenta en pantalla el resultado
+
+# Ejemplo 2, con base a un conjunto de indicadores de vigor, determina
+#            la suma expuesta, solo para casos vigentes
+
+# Datos
+
+vigor<-c(TRUE,FALSE,FALSE,TRUE,FALSE,TRUE,TRUE)
+SumaAseg<-c(66320,143899,300000,50000,150000,422383,120000)
+
+# Ciclo -- for --
+SumaExpuesta<-0
+for (pol in which(vigor==TRUE)){   # Inicia el ciclo
+    SumaExpuesta<-SumaExpuesta+SumaAseg[pol]
+}                                  # Termina e ciclo
+
+SumaExpuesta  # Presenta en pantalla el resultado
+
+# Ejercicio 
+
+# Datos
+# Genera una muestra aleatoria de un portafolio de seguro de vida, 
+# clasificado por tipo de riesgo
+
+riesgo<-sample(c("A","B","C"),25,replace = TRUE,prob=c(0.75,0.15,0.10))
+sumaaseg<-sumaaseg<-rnorm(25,mean=200000,sd=40000) # rnorm random Normal, genera números aleatorios alrededor de la media y desviación estándar señalados
+
+# Escribe un código en el recorras las 25 componentes y obtengas el total de suma asegura
+# por tipo de riesgo y su media
+
+< < Tu Código > >
+
+# Escribe un código en el que recorras los 3 tipos de riesgo y obtengas el total de suma asegurada y su media
+  
+< < Tu Código > >
+  
+
+```
+
+Considerando el ejercicio de calculo de reservas, escribe un código en el establezcas un ciclo para iterar sobre el año póliza t
+
+```{r For700, exercise=TRUE, exercise.cap="Valores en Efectivo",exercise.setup="Vec499"}
+
+   Rva<-numeric(100-Edad)   
+
+# Determina el plazo de seguro 
+  
+ PlazoSeg<-______
+
+# Establece la sintaxis de la función for  y su parametrización
+ 
+____ (t in ____) {
+   Vecqx<-TablaMx$qx[(Edad-11+t):89] 
+   if (t<60) Veckpx<-cumprod(c(1,TablaMx$px[(Edad-11+t):(89-1)])) else    Veckpx<-1
+   Vectasa<-cumprod(c(1,rep(1/(1+tasa),(89-Edad+11+1))) )  # Este vector tiene un componente mas
+   PriesgoNumerador <- (Vecqx*Veckpx) %*% Vectasa[2:(1+length(Vecqx))]
+   PriesgoDenominador <-(Veckpx %*% Vectasa[1:(length(Vecqx))])
+   Rva[t] <- PriesgoNumerador - PrimaRiesgo*PriesgoDenominador
+}
+
+
+```
+
+Considera que la función **abs()** entrega el valor absoluto de un número,
+Revisa este código e identifica los errores de sintaxis:
+
+         "if abs(a)=<epsilon 
+            {
+             ifelse(sexo=2->condicion,
+              { 
+               descuento[condicion]<-.05
+               edad[condicion]<-edad[condicion]-3
+              },
+              {
+               recargo[!condicion]<-0.10
+               edad[!condicion]<-edad[!condicion]+1
+              })
+            } else epsilon<-epsilon/2"
+
+
+```{r duda10, exercise.cap="Comprensión"}
+question("Seleccione todos los errores de sintaxis:",
+         answer("La condición de if debe indicarse entre paréntesis",correct=TRUE, message="Bien, la sintaxis es if (cond) {} else {}  "),
+         answer("El operador lógico de igualdad es incorrecto",correct=TRUE, message="EL operador correcto es ==  "),
+          answer("La expresión !condicion es incorrecta",message="EL operador ! es negación"),
+         answer("El operador logico de menor o igual es incorrecto",correct=TRUE, message="EL operador correcto es <=  "),
+         answer("La expresión false despues de else debe indicarse entre corchetes", message="No necesariamente, si es una expresion unica puede ir sin corchetes "),
+         answer("No es factible cambiar el valor de epsilon porque forma parte de la condicion", message="La evaluación de la condición se realiza con el valor de las variables en ese punto del algoritmo, posteriormente puede modificarse cualquier variable"),
+         allow_retry = TRUE,
+         random_answer_order = TRUE
+         )
+```
+
+Es posible que se presente alguna condición por la que debamos interrumpir el flujo del algoritmo, en ese caso podemos utilizar el comando **break**
+
+```{r control04, exercise=TRUE, exercise.cap="Comando for- break"}
+
+# Por ejemplo
+
+# Modelar el evento de ruina de la empresa en un horizonte de 30 años, considerando que 
+# La prima de riesgo es igual a los siniestros esperados, alrededor de 30000 anuales
+# la desviación estándar de la siniestralidad es de 3000 y el capital de la empresa  
+# es de 9000, los siniestros se distribuyen normalmente  
+
+# Utilizaremos break si se da la condición de ruina antes de cumplir la simulación de los 30 periodos
+  
+perdida<-0
+capital<-9000
+ruina<-0
+prima<-30000
+flujo<-numeric();siniestro<-numeric()
+utilidad<-numeric()
+for (i in 1:30){
+   siniestro[i]<-rnorm(1,mean=30000,sd=3000)  
+   utilidad[i]<-prima-siniestro[i]  #utilidad del ejercicio
+   perdida<-perdida-utilidad[i]     # Perdida / utilidad acumulada
+   flujo[i]<-capital-perdida        # fondos de la compañía
+   if (perdida>capital) {           # Evento de ruina
+     ruina<-1
+     break
+   }
+}
+
+ruina          # Si el resultado es 1 ocurrió el evento de ruina
+utilidad       # Imprime el vector de utilidades
+plot(flujo,type="l")
+abline(h=0,col="red")
+
+```
+
+
+```{r duda11, exercise.cap="Comprensión"}
+question("Cuales son las estrategias operativas que se reflejan en el modelo de ruina ",
+         answer("Realizar incrementos de capital ",correct=TRUE),
+         answer("Modificar la política de pricing, considerar un margen de seguridad por arriba de los siniestros esperados", correct=TRUE),
+         answer("Modificar la política de reaseguro", message="Si bien influye en el resultado del ejercicio no esta considerada en el modelo "),
+         answer("Modificar la política comercial, enfoque a nichos de SA mas baja", message="Resultado incierto, puede afectar los siniestros pero tambien la prima, solo tiene efectos positivos si reduce la desviación estándar (volatilidad) de los siniestros" ),
+         answer("Modificar la política de suscripción, evitar riesgos subnormales ", correct=TRUE, message="Si tiene efecto sobre la desviación estándar de los siniestros"),
+         
+         allow_retry = TRUE,
+         random_answer_order = TRUE
+         )
+
+```
+
+### 3.3 Función **while**
+
+Esta función es una combinación de if / for, porque repite un bloque de instrucciones mientras se cumpla una condición.
+
+Como parte del ciclo **while** tenemos que incluir una actualización de la variable de la que depende la condición, o en su defecto incluir el comando **break**, en caso contrario el ciclo se va a ejecutar de forma indefinida.
+
+En el siguiente ejemplo la condición de interrupción del ciclo es que se cumpla cualquiera de las siguientes sentencias: que la variable "salida" tome el valor de cero o que la variable "i" alcance el valor de 300.  La sentencia que la variable “i” alcance 300 es remota, pero es una condición de seguridad.
+
+
+```{r control106, exercise=TRUE,exercise.cap="**Comando while**"}
+salida<-1
+i<-0
+while(i<300 & salida!=0){  # i debe se menor a 300 y salida no debe ser cero 
+  salida<-sample(c(0,1),size=1,replace=TRUE,prob=c(.05,.95)) # prueba aleatoria
+  i<-i+1
+}
+paste("Numero de veces en el ciclo",i)
+
+# Con base en el código de ejercicio de ruina genera un código sustituyendo el comando
+# for por el comando while, detente cuando hayas evaluado 100 ejercicios
+
+< < Tu Código > >
+
+```
+
+
+### 3.4 Ejercicio de Cash Flow
+
+Para este ejercicio utilizaremos los conceptos que conocemos acerca del manejo de vectores comandos de control de flujo y estructuras de datos, el objetivo es generar un estado de resultados, que incluya los siguientes conceptos:
+
++ Ingresos 
+    - Prima
+    - Producto financiero
+    - Cargos por rescate
++ Egresos 
+    - Siniestros
+    - Gastos de adquisición
+    - Gastos de operación
+    - Rescates
+   
+   
+Variables de entrada
+
+    - Edad del solicitante, determina el patron de reclamaciones y pago de primas
+    - Sexo del solicitante, en caso de que se realicen descuentos en la edad de calculo
+    - Tipo de plan, Temporal, Ordinario de Vida, Dotal
+    - Plazo de seguro, 
+    - Plazo e pago
+    - Suma Asegurada
+    - Esquema de gastos de adquisición
+    - Esquema de gastos de administración
+    - Patrón de persistencia
+
+```{r varAssetShare,exercie.setup="Vec299"}
+TablaMx <- read_csv(x)
+
+TablaMx$px<-1-TablaMx$qx
+tasa<-0.04
+SAP<-2000
+VecPersis<-numeric(100)
+Vectasa <- cumprod( c(1 , rep(1/(1+tasa),89))) 
+Gadminfijo <- 1500/SAP   # SAP = Suma Asegurada al millar promedio 
+GadmVar <- .07 
+Comis <- c(0.50,0.25,0.15,rep(0.03,90))
+PersisAnual<-c(1,.80,.90,.95,.97,.98,rep(.99,90)) # Cuantas pólizas continúan al final del ejercicio, con base a las que iniciaron el ejercicio
+# PersisAnual<-rep(1,90) # Cuantas pólizas continúan al final del ejercicio, con base a las que iniciaron el ejercicio
+
+ VecPersis<-cumprod(PersisAnual)
+
+ CargoRescate<-c(1,1,seq(1,0,-.04),rep(0,62))
+
+ # Datos
+  Edad<-40
+  Plazoseguro<-Plazopago<-100-Edad  
+  SumaAseg<-3000000
+ 
+```
+
+En esta sección desarrollaremos un ciclo para calcular los flujos esperados de una póliza para cada uno de los años que esté en vigor hasta su extinción, considerando los parámetros con los que se generaron sus valores asociados, esto es: mortalidad, tasa de interés, gastos tanto de administración como de adquisición.
+
+```{r control110, exercise=TRUE, exercise.cap="Código para generar un Asset Share", exercise.setup="varAssetShare"}
+
+# Para este ejercicio hay una serie de variables pre cargadas
+
+# TablaMx      Tabla de Mortalidad
+# tasa         Tasa de Interés tecnico 4%
+# SAP          Suma Asegurada Promedio  2,000,000
+# VecPersis    Vector de factores persistencia acumulada
+# Vectasa      Vector de factores de descuento anuales 
+# Gadminfijo   Tantos de gastos de administración fijo 1500/SAP 
+# GadmVar      Factor de gastos de administración variables 
+# Comis        Vector de porcentaje de comisiones
+# PersisAnual  Vector de porcentajes de persistencia anual 
+# CargoRescate <-c(1,1,seq(1,0,-.04),rep(0,62))
+# Edad         Edad del asegurado
+# Plazoseguro  Plazo de vigencia del seguro 
+# Plazopago    Plazo de pago primas  
+# SumaAseg     Suma asegurada / capital en riesgo  3,000,000
+
+# Calculo de primas
+  
+  Vecqx<-TablaMx$qx[(Edad-11):(Edad-11+Plazoseguro)] 
+  
+  Veckpx<-cumprod(c(1,TablaMx$px[(Edad-11):((Edad-11+Plazoseguro)-1)]))
+
+  PriesgoNumerador <- (Vecqx*Veckpx) %*% Vectasa[2:(2+Plazoseguro)]
+  
+  PriesgoDenominador <-(Veckpx %*% Vectasa[1:(1+Plazoseguro)]) 
+  
+  PrimaRiesgo <- 1000*(tasa/log(1+tasa))*(PriesgoNumerador/PriesgoDenominador)
+  
+  Comis<-Comis[1:(Plazopago+1)]
+
+  Gadq <- (Comis* Veckpx) %*%  Vectasa[1:(Plazopago+1)]/(Veckpx %*%Vectasa[1:(length(Vecqx))]) 
+
+ PrimaTarifa <-(PrimaRiesgo + Gadminfijo) / (1 - GadmVar - Gadq)
+  
+ Prima<-SumaAseg*PrimaTarifa/1000
+   
+# Inicia ciclo for
+
+ #     Inicializa parámetros y vectores
+  
+   IngPrima<-EgrSiniestros<-EgrGadminfij<-EgrGadminvar<-vector()
+  
+  EgrGadq<-IngLiber<-EgrRescate<-ProdFin<-Saldofinal<-SaldoInicio<-vector()
+  
+  SaldoInicio<-Saldofinal<-rep(0,Plazoseguro)
+
+  for (t in 1:Plazoseguro){
+  
+  IngPrima[t]<-Prima*Veckpx[t]*VecPersis[t]
+  
+  EgrSiniestros[t]<-VecPersis[t]*Veckpx[t]*Vecqx[t]*SumaAseg
+  
+  EgrGadminfij[t]<-1500*VecPersis[t]*Veckpx[t]
+  
+  EgrGadminvar[t]<- IngPrima[t]* GadmVar
+  
+  EgrGadq[t]<-IngPrima[t]*Comis[t]
+  
+  if (t==1) IngLiber[t]<-0 else IngLiber[t]<-(VecPersis[t-1]*Veckpx[t-1]-
+                                              VecPersis[t]*Veckpx[t])*SaldoInicio[t]
+  #IngLiber[t]<-0
+  
+  EgrRescate[t]<-IngLiber[t]* (1-CargoRescate[t])
+  
+  ProdFin[t]<-SaldoInicio[t]*tasa+(IngPrima[t] - EgrGadminfij[t] - 
+               EgrGadminvar[t] - EgrGadq[t]-EgrSiniestros[t])*tasa/2
+  
+  Saldofinal[t]<-SaldoInicio[t]+IngPrima[t] -  EgrSiniestros[t] -
+                 EgrGadminfij[t] - EgrGadminvar[t] - EgrGadq[t] +                                   IngLiber[t] -EgrRescate[t]+ProdFin[t]
+  
+  if (t<Plazoseguro) SaldoInicio[t+1]<-Saldofinal[t]
+
+}
+
+    AssetShare<-data.frame( SaldoI=SaldoInicio,
+                          Prima=IngPrima,
+                          Siniestros=EgrSiniestros,
+                          GtoAdmF=EgrGadminfij,
+                          GtoAdmV=EgrGadminvar,
+                          GtoAdq=EgrGadq,
+                          Liber=IngLiber,
+                          Devol=EgrRescate,
+                          Intereses=ProdFin,
+                          SaldoF=Saldofinal
+                          )
+    
+    format(AssetShare,digits=2,big.mark=",")
+
+    ValPre<-data.frame(Prima=Vectasa[1:Plazoseguro]%*%IngPrima,
+                          Siniestros=Vectasa[1:Plazoseguro]%*%EgrSiniestros,
+                          GtoAdmF=Vectasa[1:Plazoseguro]%*%EgrGadminfij,
+                          GtoAdmV=Vectasa[1:Plazoseguro]%*%EgrGadminvar,
+                          GtoAdq=Vectasa[1:Plazoseguro]%*%EgrGadq,
+                          Liber=Vectasa[1:Plazoseguro]%*%IngLiber,
+                          Devol=Vectasa[1:Plazoseguro]%*%EgrRescate,
+                          Intereses=Vectasa[1:Plazoseguro]%*%ProdFin,
+                          SaldoF=Vectasa[Plazoseguro]*Saldofinal[Plazoseguro]
+                          )
+    
+paste('Valores presentes')
+format(ValPre,digits=2,big.mark=",")
+
+   
+        
+```
+
+Con los elementos de R que tenemos hasta ahora podemos calcular anualidades ciertas, anualidades contingentes, primas de seguro tanto de riesgo como de tarifa y determinar un cash flow
+
+
+```{r Resumen04, exercise=TRUE,exercise.cap="Resumen",eval=TRUE}
+
+# ¿Que aprendimos? 
+
+# En la sección IF IFELSE 
+#    La sintaxis de if.... else   e ifelse
+#    Uso de vectores en la instrucción ifelse
+
+# En la sección FOR
+#    sintaxis de comando for
+#    Interreupción del ciclo con el comando break
+#    manejo de indices de conteo con condiciones
+            
+# En la sección WHILE 
+# Sintaxis del comando while
+
+
+# En la sección ASSER SHARE
+#               - 
+
+```
+
+
+```{r Resumen04-solution}
+
+# En la sección IF IFELSE 
+
+   ifelse(VecA%%2==0,
+          ifelse(VecA<=3,VecA^3,sqrt(VecA)),
+          ifelse(VecA<=3,log(VecA),exp(VecA))
+           )
+
+# En la sección FOR
+
+# 4.3 Recorre todas las componentes Suma asegurada por tipo de riesgo y su media
+#         Inicializar variables que acumulan
+            totr<-tots<-vector()
+            totr[c("A","B","C")]<-tots[c("A","B","C")]<-rep(0,3)
+#         Ejecuta ciclo que recorre todas las componentes
+            for (k in 1:25){
+                totr[riesgo[k]]<-totr[riesgo[k]]+1
+                tots[riesgo[k]]<-tots[riesgo[k]]+sumaaseg[k]
+            }
+            Media<-tots/totr
+#    4.4 Recorre tipo de riesgo 
+#         Inicializar variables que acumulan
+            totr<-tots<-vector()
+            totr[c("A","B","C")]<-tots[c("A","B","C")]<-rep(0,3)
+#        Ejecuta ciclo que recorre tipos de riesgo
+          for(t in c("A","B","C")){
+             totr[t]<-length(which(riesgo==t))  # Ojo No usa suma
+             tots[t]<-sum(sumaaseg[which(riesgo==t)])
+          }
+# En la sección WHILE 
+for (i in 1:30){
+   siniestro[i]<-rnorm(1,mean=30000,sd=3000)  
+   utilidad[i]<-prima-siniestro[i]  #utilidad del ejercicio
+   perdida<-perdida-utilidad[i]     # Perdida / utilidad acumulada
+   flujo[i]<-capital-perdida        # fondos de la compñia
+   if (perdida>capital) {           # Evento de ruina
+     ruina<-1
+     break
+   }
+}
+
+ruina          # Si el resultado es 1 ocurrio el evento de ruina
+utilidad       # Imprime el vector de utilidades
+plot(flujo,type="l")
+abline(h=0,col="red")
+               - 
+# En la sección ASSER SHARE
+#    
+#               -
+```
+
+
+## 4. Funciones {data-progressive=TRUE}
+
+Complementario a las funciones que R ya tiene integradas, nosotros como usuarios podemos desarrollar una nueva función; recordemos que una función es un conjunto de instrucciones, las cuales operan parámetros de entrada para producir un resultado concreto, de manera que, si una parte del código se repite más de una vez, entonces esta sección será un buen candidato para crear una función.
+
+Entre las ventajas que tiene crear una función están:
+
+- El código es más compacto y entendible.
+- Reduce la posibilidad de errores de copiar y pegar el código.
+- Facilita la actualización o modificación del código.
+- Homologa el manejo de parámetros y resultados.
+
+Para declarar una función la sintaxis es:
+
+*NombreFunción*<-function(*Argumentos*){*Procedimiento -- entregable*}
+
+- **NombreFuncion**: Identificador del objeto creado en R con el que se llama el procedimiento
+- **Argumentos**: Parámetros de entrada a considerar en el procedimiento   
+- **Procedimiento**: Algoritmo con el que opera/modifica las variables de entrada y propias de la función para producir el resultado entregable
+- **Entregable**: Variables de respuesta que produce el algoritmo
+
+Veamos nuestro primer ejemplo:
+
+```{r Fun11,exercise=TRUE, exercise.cap="Ejemplo 1. Declaración de Funciones"}
+
+# El nombre de la función es "Ev"
+# Los argumentos son 2: x y t 
+# El cuerpo de la función, primero evalúa si son valores operables, en caso afirmativo opera x dependiendo de t
+# Regresa la variable "y"
+
+Ev<-function(x,t=4){
+  ifelse ((!is.numeric(x) | (any(x<0) & t==4)), y<-"Valores Invalidos",{if (t==1) y<-sum(x)
+     if (t==2) y<-prod(x)
+     if (t==3) y<-cumprod(x)
+     if (t!=1 & t!=2 & t!= 3) y<-log(x)
+     return(y)})
+}
+
+# Llamados de la función
+
+a<-c(28,19,7,30,17,21)
+
+(Ev(a,2))
+
+(Ev(a,4))
+
+(Ev(a))
+
+# Nota los siguientes aspecto: 
+# - Si en la definición de la funcion, se declara un valor por omisión para un parámetro (en este ejemplo t=4) es factible omitir este parámetro de la llamada
+# - Una función puede entregar diferentes resultados dependiendo de los parametors
+# - Es recomendable incluir una validación de que los datos son operables dentro del cuerpo de la función
+
+
+# Complementa el código que regrese el índice de masa corporal
+# y el peso ideal para tener un IMC=25
+# IMC= Peso / Altura (mts) ^ 2
+
+IMC<-function(Peso,Alt){
+  
+  < < Tu Código > >
+  
+}
+
+```
+
+
+El siguiente ejemplo determina las tasas de los instrumentos libres de riesgo para un periodo continuo de tiempo.
+
+Recordemos que **la tasa libre de riesgo**, es la alternativa que tiene el inversionista para colocar sus recursos sin asumir ningún riesgo crediticio ni riesgo de reinversión, esto es que la entidad que emitió el documento siempre va a cumplir con sus compromisos y que al vencimiento del documento va a estar disponible otro documento con al menos los mismos rendimientos.
+
+Para el caso del mercado mexicano la tasa libre de riesgo esta determinada por la tasa que pagan los documentos gubernamentales, para los instrumentos en moneda nacional, tenemos:
+
+
+Obs \ Plazo|1 año |3 años|5 años|10 años|20 años|30 años
+-----------|------|------|------|-------|-------|--------
+Sep 20     |4.45% |  4.56|  4.87| 5.68  |   6.66|  6.98%
+Nov 20     |4.32% |  4.55|  4.89| 5,98  |   6.95|  7.20%
+Dic 21 Pro |2.04% |  2,62|  3.38| 5.15  |   6.42|  6.74%
+<font size ="1"> Fuente:www.worldgovermentbonds.com</font>
+
+Las tasas libres de riesgo, se utilizan en los modelos de seguros para descontar los flujos de la empresa y determinar la rentabilidad del negocio, entre otras cosas.
+
+El problema que se presenta es que la curva de tasas tiene ciertos nodos, en este caso 1,3 5, 10, 20 y 30 años, mientras que el portafolio tiene vencimientos todos los años.
+
+Para ello tomaremos los nodos disponibles y proyectaremos las tasas de los plazos intermedios, esto lo haremos con una interpolación lineal.
+
+```{r Fun01, exercise=TRUE, exercise.cap="Creación de Funciones de Usuario" }
+
+library(ggplot2)
+
+# En este ejemplo vamos a tomar la información de tasas y plazos
+# la vamos a conservar en una estructura de datos que se llama 
+# "estructura" las proyecciones las vamos a conservar en el objeto
+# "curv"
+
+curva<-function(plazo,tasa){
+# verificar que plazo y tasa son de la misma longitud, en caso contrario enviar mensaje de error
+  incremento<-numeric()
+  estructura<-data.frame(plazo, tasa)     # Crea el objeto "estructura" con los parámetros de entrada
+  
+  curv<-data.frame(p=integer(), t=double())  # Inicializa el objeto curv como data.frame
+  estructura$plazo<-plazo[rank(plazo)]  # Ordena la información de acuerdo al parámetro plazo
+  estructura$tasa<-tasa[rank(plazo)]  # Ordena la información de acuerdo al parámetro plazo
+  n<-length(plazo)  # Inicializa la variable n con el número de elementos de "plazo"
+
+  j<-1
+  for(i in estructura$plazo[1]:estructura$plazo[n]){  # Establece un cliclo para cada nodo
+     if (i==estructura$plazo[j]) {                    # Verifica si el año i es un nodo j
+       curv<-rbind(curv,c(estructura$plazo[j],estructura$tasa[j]))  # Positivo: Actualiza Curv con la información de estructura
+       j<-j+1                                         # Mueve el nodo
+       incremento<-(estructura$tasa[j]-estructura$tasa[j-1])/(estructura$plazo[j]-estructura$plazo[j-1])}  # Determina el incremento que debe aplicar para los años intermedio
+     else {     # Negativo: no esta en un nodo
+             curv<-rbind(curv,c(i,estructura$tasa[j-1]+(i-estructura$plazo[j-1])*incremento))              # actualiza el objeto curv con la información del incremento
+     }
+  }
+  colnames(curv)<-c("plazo","tasa")  # Actualiza el nombre de las columnas de curv
+  return(curv)        # Entrega como resultado de la función el objeto curv
+  }
+
+
+Plazo<-c(1,3,5,10,20,30)
+Tasa<-c(4.45,4.56,4.87,5.68,6.66,6.98)
+MxTasaOct<-curva(Plazo,Tasa)
+
+(MxTasaOct)
+
+Col<-rep("black",30)
+Col[which(MxTasaOct$plazo%in%Plazo)]<-"red"
+T<-rep(1,30)
+T[which(MxTasaOct$plazo%in%Plazo)]<-2
+
+  ggplot(MxTasaOct, aes(x=plazo, y=tasa)) +
+  geom_line( color="gray") +
+  geom_point(shape=19, color=Col, size=T) +
+  ggtitle("Curva de Tasas Libre de Riesgo Octubre 2020") +
+  labs(caption="Banco de México") +  
+  theme_light()
+
+  
+  
+# Modifica los plazos y las tasas y ejecuta la función
+
+Plazo<- **< < Tu Código > >**
+Tasa<-  **< < Tu Código > >**
+
+MxTasaOct<-curva(Plazo,Tasa)
+
+
+Col<-rep("black",length(MxTasaOct$plazo))
+Col[which(MxTasaOct$plazo%in%Plazo)]<-"red"   # Modifca el color a orange, blue, purple
+T<-rep(1,length(MxTasaOct$plazo))
+T[which(MxTasaOct$plazo%in%Plazo)]<-2         # Modifica el tamaño del icono
+
+ggplot(MxTasaOct, aes(x=plazo, y=tasa)) +
+geom_line( color="blue") +
+geom_point(shape=19, color=Col, size=T) +
+ggtitle("Curva de Tasas Libre de Riesgo Periodos Modificados") +
+theme_light()
+
+
+```
+
+En esta sección vamos a retomar el código para el cálculo de la prima de riesgo y de tarifa y lo vamos a declarar como una función con el objeto de calcular estas primas para un conjunto de edades, asi mismo, habilitaremos el campo de tasa de Interés para que pueda recibir como parámetro un vector y calcular los flujos con una curva de tasas de Interés.
+
+
+```{r FunPrimas, exercise=TRUE, echo=FALSE}
+
+# Rango de edades para 
+
+x<-"Edad,CNSF2000I\n12,0.4\n13,0.43\n14,0.46\n15,0.5\n16,0.53\n17,0.58\n18,0.62\n19,0.67\n20,0.72\n21,0.77\n22,0.83\n23,0.9\n24,0.97\n25,1.04\n26,1.12\n27,1.21\n28,1.3\n29,1.4\n30,1.51\n31,1.62\n32,1.75\n33,1.88\n34,2.03\n35,2.19\n36,2.35\n37,2.54\n38,2.73\n39,2.94\n40,3.17\n41,3.41\n42,3.67\n43,3.95\n44,4.26\n45,4.59\n46,4.94\n47,5.32\n48,5.73\n49,6.16\n50,6.64\n51,7.15\n52,7.69\n53,8.28\n54,8.92\n55,9.6\n56,10.33\n57,11.12\n58,11.97\n59,12.88\n60,13.86\n61,14.91\n62,16.05\n63,17.27\n64,18.57\n65,19.98\n66,21.49\n67,23.11\n68,24.85\n69,26.72\n70,28.72\n71,30.87\n72,33.18\n73,35.65\n74,38.3\n75,41.14\n76,44.17\n77,47.42\n78,50.9\n79,54.62\n80,58.59\n81,62.83\n82,67.36\n83,72.19\n84,77.34\n85,82.82\n86,88.65\n87,94.85\n88,101.44\n89,108.42\n90,115.83\n91,123.68\n92,131.97\n93,140.74\n94,149.98\n95,159.72\n96,169.97\n97,180.73\n98,192.02\n99,203.84\n100,1000\n101,NA\n102,NA\n103,NA\n104,NA\n105,NA\n106,NA\n107,NA\n108,NA\n109,NA\n110,NA\n"
+
+TablaMx <- readx_csv(x")
+
+Primas<-function(Ed, Tasa, Plazo){
+idx<-1
+PRgo<-PTfa<-numeric()
+Lt<-length(Tasa)  
+if (Lt==1) tasa <- rep(Tasa,Plazo) else {
+  tasa<-Tasa[1:min(Lt,Plazo)]
+  if (Lt<Plazo) tasa[Lt+1:Plazo]<-Tasa[Lt]
+}
+Vectasa<-cumprod( c(1,rep(1/(1+tasa),Plazo))) 
+ 
+
+TablaMx$px<-1-TablaMx$qx
+
+SAP<-2000
+VecPersis<-numeric(100)
+VecComis<-numeric(100)
+Gadminfijo <- 1500/SAP   # SAP = Suma Asegurada al millar promedio 
+GadmVar <- .07 
+Comis <- c(0.50,0.25,0.15,rep(0.03,90))
+PersisAnual<-c(1,.80,.90,.95,.97,.98,rep(.99,90)) 
+# Cuantas pólizas continúan al final del ejercico, con base a las que iniciaron el ejercicio
+# PersisAnual<-rep(1,90) # Cuantas pólizas continúan al final del ejercicio, con base a las que iniciaron el ejercicio
+
+ VecPersis<-cumprod(PersisAnual)
+
+ CargoRescate<-c(1,1,seq(1,0,-.04),rep(0,62))
+ SumaAseg<-3000000
+ 
+ # Datos
+  for (Edad in Ed){
+  if (Plazo == 100) Plazoseguro<-Plazopago<-100-Edad  else Plazoseguro<-Plazopago<-Plazo  
+
+# Calculo de primas
+  
+  Vecqx<-TablaMx$qx[(Edad-11):(Edad-11+Plazoseguro)] 
+  
+  Veckpx<-cumprod(c(1,TablaMx$px[(Edad-11):((Edad-11+Plazoseguro)-1)]))
+
+  PriesgoNumerador <- (Vecqx*Veckpx) %*% Vectasa[2:(2+Plazoseguro)]
+  
+  PriesgoDenominador <-(Veckpx %*% Vectasa[1:(1+Plazoseguro)]) 
+  
+  PrimaRiesgo <- 1000*(mean(tasa)/log(1+mean(tasa)))*(PriesgoNumerador/PriesgoDenominador)
+  
+  PRgo[idx]<-PrimaRiesgo
+    
+  VecComis<-Comis[1:(Plazopago+1)]
+
+  Gadq <- (VecComis* Veckpx) %*%  Vectasa[1:(Plazopago+1)]/(Veckpx %*%Vectasa[1:(length(Vecqx))]) 
+
+   PrimaTarifa <-(PrimaRiesgo + Gadminfijo) / (1 - GadmVar - Gadq)
+  
+   PTfa[idx]<-PrimaTarifa
+   idx<-idx+1
+  }
+  
+   Prima<-SumaAseg*PrimaTarifa/1000
+   
+   PrMat<-matrix(c(Ed,PRgo,PTfa),nrow=length(Ed))
+   colnames(PrMat)<-c("Edad","Riesgo","Tarifa")
+   
+   return(PrMat)}  
+  
+# Establece el rango de edades 
+
+ Edades <- < < Tu Código > >
+
+ (Primas(Edades,.04,100))
+
+ # Consideremos las tasas libre de riesgo del ejercicio anterior, tenemos
+ 
+ tasa<-c(4.450, 4.505, 4.560, 4.715, 4.870, 5.032, 5.194, 5.356, 5.518,5.680, 5.778, 5.876, 5.974, 6.072, 6.170, 6.268, 6.366, 6.464,6.562, 6.660, 6.692, 6.724, 6.756, 6.788, 6.820, 6.852, 6.884,6.916, 6.948, 6.980)/100
+ 
+# Calcula las primas de riesgo y de tarifa, para el mismo rango de edades actualizando la tasa
+ 
+< < Tu Código > >
+   
+# Elabora  un escenario en el que apliques un shock a las tasas de Interés de 200 puntos basicos
+   
+< < Tu Código > >   
+
+```
+
+```{r duda22, exercise.cap="Comprensión"}
+question("Cuales son las estrategias operativas que se reflejan en el modelo de ruina ",
+         answer("Realizar incrementos de capital ",correct=TRUE),
+         answer("Modificar la política de pricing, considerar un margen de seguridad por arriba de los siniestros esperados", correct=TRUE),
+         answer("Modificar la política de reaseguro", message="Si bien influye en el resultado del ejercicio no esta considerada en el modelo "),
+         answer("Modificar la política comercial, enfoque a nichos de SA mas baja", message="Resultado incierto, puede afectar los siniestros pero tambien la prima, solo tiene efectos positivos si reduce la desviación estándar (volatilidad) de los siniestros" ),
+         answer("Modificar la política de suscripción, evitar riesgos subnormales ", correct=TRUE, message="Si tiene efecto sobre la desviación estándar de los siniestros"),
+         
+         allow_retry = TRUE,
+         random_answer_order = TRUE
+         )
+
+```
+
+
+```{r Resumen05, exercise=TRUE,exercise.cap="Resumen",eval=TRUE}
+
+# ¿Que aprendimos? 
+
+# Declarar una función de usuario
+#      - Llamar una función de usuario
+#      - Declarar parámetros por omisión
+#      - Graficar con GGPLOT
+#      - Cambiar el tamaño y color de los elementos de un conjunto de datos a graficar
+#      - Incluir el título de una gráfico de GGPLOT
+#      - Incluir una nota a un gráfico GGPLOT
+
+# Una misma función sirve para calcular diferentes escenarios
+
+```
+
+
+
+```{r Resumen05-solution}
+
+# Funcion  del IMC
+  IMC<-function(Peso,Alt){
+  if (is.na(Peso)| is.na(Alt)) return("Parámetros Insuficientes")
+  IM<-Peso/Alt^2
+  Ideal<-25*Alt^2
+  return(c(IM,Ideal))
+  }
+
+    
+# Rango de edades para el calculo de primas, cualquiera de las siguientes expresiones
+  Edades<-seq(from=20, to=70, by=5)
+  
+  Edades<-c(27,43,61)
+  
+  Edades<-seq(30,45,2)
+  
+# Modificar las primas actualizando la tasa
+  
+  (Primas(Edades,tasa/100,100))
+
+# Escenario de shock -200
+  tasa<-tasa-2 # Cien puntos básicos corresponden a un punto porcentual
+  (Primas(Edades, tasa/100,100))
+
+```
+
+```{r CashFlow}
+  
+x<-c("Edad,EM89M,CNSF2000I\n12,1.12,0.4\n13,1.14,0.43\n14,1.16,0.46\n15,1.19,0.5\n16,1.21,0.53\n17,1.24,0.58\n18,1.27,0.62\n19,1.3,0.67\n20,1.34,0.72\n21,1.38,0.77\n22,1.42,0.83\n23,1.47,0.9\n24,1.52,0.97\n25,1.57,1.04\n26,1.64,1.12\n27,1.7,1.21\n28,1.77,1.3\n29,1.85,1.4\n30,1.94,1.51\n31,2.03,1.62\n32,2.14,1.75\n33,2.25,1.88\n34,2.37,2.03\n35,2.5,2.19\n36,2.65,2.35\n37,2.81,2.54\n38,2.98,2.73\n39,3.17,2.94\n40,3.38,3.17\n41,3.6,3.41\n42,3.84,3.67\n43,4.11,3.95\n44,4.4,4.26\n45,4.72,4.59\n46,5.07,4.94\n47,5.45,5.32\n48,5.86,5.73\n49,6.31,6.16\n50,6.8,6.64\n51,7.33,7.15\n52,7.91,7.69\n53,8.55,8.28\n54,9.24,8.92\n55,10,9.6\n56,10.82,10.33\n57,11.72,11.12\n58,12.69,11.97\n59,13.76,12.88\n60,14.92,13.86\n61,16.19,14.91\n62,17.57,16.05\n63,19.07,17.27\n64,20.7,18.57\n65,22.49,19.98\n66,24.43,21.49\n67,26.54,23.11\n68,28.84,24.85\n69,31.34,26.72\n70,34.06,28.72\n71,37.02,30.87\n72,40.24,33.18\n73,43.75,35.65\n74,47.55,38.3\n75,51.69,41.14\n76,56.18,44.17\n77,61.05,47.42\n78,66.34,50.9\n79,72.08,54.62\n80,78.29,58.59\n81,85.03,62.83\n82,92.32,67.36\n83,100.21,72.19\n84,108.74,77.34\n85,117.96,82.82\n86,127.9,88.65\n87,138.62,94.85\n88,150.17,101.44\n89,162.59,108.42\n90,175.93,115.83\n91,190.25,123.68\n92,205.58,131.97\n93,221.98,140.74\n94,239.48,149.98\n95,258.13,159.72\n96,277.95,169.97\n97,298.98,180.73\n98,321.21,192.02\n99,1000,203.84\n100,1000,1000\n101,NA,NA\n102,NA,NA\n103,NA,NA\n104,NA,NA\n105,NA,NA\n106,NA,NA\n107,NA,NA\n108,NA,NA\n109,NA,NA\n110,NA,NA\n")
+
+    TablasMx <- read_csv(x)
+
+
+  PR<-function(Edad,Tabla,Tasa,PlazoSeg,PlazoPag=0,Dotal=0,Fsel=0,Persis=0,Gvar,Gfij,Comis=1,Sap){
+
+  Edad<-40
+  Tabla<-3
+  Tasa<-.04
+  PlazoSeg<-20
+  PlazoPag<-0
+  Dotal<-0
+  Fsel<-0
+  Persis<-0
+  Gvar<-.04
+  Gfij<-1500
+  Comis<-1
+  Sap<-2000000
+  SumaAseg<-3000000
+      
+      Vectasa<-numeric()
+      Vecqx<-numeric()
+      Veckpx<-numeric()
+      Veckpxp<-numeric()
+      Veckpxs<-numeric()
+      Vecdot<-numeric()
+      Vecsel<-numeric()
+      Vecper<-numeric()
+      Veccom<-numeric()
+      
+      
+      TablaMx<-data.frame(Edad=TablasMx$Edad, qx=TablasMx[,Tabla])
+      
+      names(TablaMx)<-c('Edad', 'qx')
+      
+      TablaMx<-TablaMx[-which(is.na(TablaMx$qx)),]
+      
+      if (max(TablaMx$qx)>1) {
+        TablaMx$qx<-TablaMx$qx/1000 
+      }
+      
+      TablaMx$px<-1-TablaMx$qx
+      
+      FacIni<-first(TablaMx$Edad)-1  # Factor a descontar en la edad para obtener el primer componente
+      EdadMax<-max(TablaMx$Edad)
+      
+      Tasa[which(Tasa>1)]<-Tasa[which(Tasa>1)]/100
+      
+      if (length(Tasa)==1) {
+        Vectasa <- cumprod( c(1 , rep(1/(1+Tasa),PlazoSeg)))
+      } else {
+        Tasa<-c(Tasa,rep(last(Tasa),PlazoSeg-length(Tasa)))
+        Vectasa <- cumprod( c(1 , 1/(1+Tasa)))
+      }
+      
+      tasa<-max(Tasa)
+      
+      if (PlazoSeg==99){ 
+        PlazoSeg<-EdadMax-Edad
+      }
+      
+      if (PlazoPag==0){
+        PlazoPag<-PlazoSeg
+      }
+      
+      if (PlazoPag>PlazoSeg){
+        PlazoPag<-PlazoSeg
+      }
+      
+      Edadt <- Edad-FacIni
+      
+      Edads <- Edadt+PlazoSeg  # Edad a la que termina el plazo de seguro
+      
+      Edadp <- Edadt+PlazoPag  # Edad a la que termina el plazo de pago
+      
+      Vecdot<-rep(0,PlazoSeg)
+      
+      if (Dotal==1){
+        Vecdot[PlazoSeg]<-1
+      }
+      # Factores de selección  
+      Vecsel<-rep(1,(Edads-Edadt))
+      if (Fsel!=0){
+        switch (Fsel,
+                FacS<-c(.6,.85),
+                FacS<-c(.75,.90),
+                FacS<-c(.8,.95)
+        )
+        Vecsel[1:length(FacS)]<-FacS
+      } 
+      
+      # Factores de Persistencia  
+      Vecper<-rep(1,(Edads-Edadt))
+      if (Persis!=0){
+        switch (Persis,
+                FacP<-c(1,.75,.85,0.90,0.92,0.94,0.96),
+                FacP<-c(1,.70,.80,0.85,0.90,0.92,0.95),
+                FacP<-c(1,.80,.88,0.92,0.94,0.96,0.98)
+        )
+        Vecper<-c(FacP,rep(last(FacP),(length(Vecper)-length(FacP))-1))
+      }  
+      
+                  Gadminfijo <- Gfij/(Sap/1000)   # Gastos de administración fijo 
+    
+    Gadminvar <- Gvar         # Gastos de administración variables
+    
+    Veccom<-rep(1,(Edadp-Edadt))
+    
+    switch (Comis,
+            FacC<-c(0.6,0.20,0.10,0.08,0.04),
+            FacC<-c(0.4,0.15,0.08,0.04,0.02),
+            FacC<-c(0.3,0.12,0,06,0.04,0.02)
+      )
+    Veccom<-c(FacC,rep(last(FacC),(length(Veccom)-length(FacC))))
+          
+      Vecqx<-TablaMx$qx[Edadt:(Edads-1)]*Vecsel*cumprod(Vecper)   
+      
+      Veckpxs<-cumprod(c(1,TablaMx$px[Edadt:(Edads-2)]))*cumprod(Vecper)
+      
+      Veckpxp<-cumprod(c(1,TablaMx$px[Edadt:(Edadp-2)]))*cumprod(Vecper)[1:(Edadp-Edadt)]
+      
+      PriesgoNumerador <- (Vecqx*Veckpxs+Vecdot*Veckpxs )%*% Vectasa[2:(1+length(Vecqx))]
+      
+      PriesgoDenominador <-(Veckpxp %*% Vectasa[1:(length(Veckpxp))])
+      
+      PrimaRiesgo <- (tasa/log(1+tasa))*(PriesgoNumerador/PriesgoDenominador)
+
+          Gadq <- (Veccom * Veckpxp) %*%  Vectasa[1:(length(Veckpxp))]/(Veckpxp %*%  Vectasa[1:(length(Veckpxp))])
+          
+    PrimaTarifa <- (PrimaRiesgo + Gadminfijo) / (1 - Gadminvar - Gadq)
+      
+    return(PrimaTarifa)
+      
+  }
+
+CF<-function(Edad,Tabla,Tasa,PlazoSeg,PlazoPag=0,Dotal=0,Fsel=0,Persis=0,Gvar,Gfij,Comis=1,Sap,SumaAseg){
+  
+#  Edad<-40
+#  Tabla<-4
+#  Tasa<-.04
+#  PlazoSeg<-20
+#  PlazoPag<-0
+#  Dotal<-0
+#  Fsel<-0
+#  Persis<-0
+#  Gvar<-.04
+#  Gfij<-1500
+#  Comis<-1
+#  Sap<-2000000
+#  SumaAseg<-3000000
+  
+  
+  CargoRescate<-c(1,1,seq(1,0,-.04),rep(0,62))
+  
+  IngPrima<-EgrSiniestros<-EgrGadminfij<-EgrGadminvar<-vector()
+  
+  EgrGadq<-IngLiber<-EgrRescate<-ProdFin<-Saldofinal<-SaldoInicio<-vector()
+  
+  SaldoInicio<-Saldofinal<-rep(0,PlazoSeg)
+
+    
+      Vectasa<-numeric()
+      Vecqx<-numeric()
+      Veckpx<-numeric()
+      Veckpxp<-numeric()
+      Veckpxs<-numeric()
+      Vecdot<-numeric()
+      Vecsel<-numeric()
+      Vecper<-numeric()
+      Veccom<-numeric()
+      
+      
+      TablaMx<-data.frame(Edad=TablasMx$Edad,qx=TablasMx[,Tabla])
+      
+      names(TablaMx)<-c('Edad', 'qx')
+      
+      TablaMx<-TablaMx[-which(is.na(TablaMx$qx)),]
+      
+      if (max(TablaMx$qx)>1) {
+        TablaMx$qx<-TablaMx$qx/1000 
+      }
+      
+      TablaMx$px<-1-TablaMx$qx
+      
+      FacIni<-first(TablaMx$Edad)-1  # Factor a descontar en la edad para obtener el primer componente
+      EdadMax<-max(TablaMx$Edad)
+      
+      Tasa[which(Tasa>1)]<-Tasa[which(Tasa>1)]/100
+      
+      if (length(Tasa)==1) {
+        Vectasa <- cumprod( c(1 , rep(1/(1+Tasa),PlazoSeg)))
+      } else {
+        Tasa<-c(Tasa,rep(last(Tasa),PlazoSeg-length(Tasa)))
+        Vectasa <- cumprod( c(1 , 1/(1+Tasa)))
+      }
+      
+      tasa<-max(Tasa)
+      
+      if (PlazoSeg==99){ 
+        PlazoSeg<-EdadMax-Edad
+      }
+      
+      if (PlazoPag==0){
+        PlazoPag<-PlazoSeg
+      }
+      
+      if (PlazoPag>PlazoSeg){
+        PlazoPag<-PlazoSeg
+      }
+      
+      Edadt <- Edad-FacIni
+      
+      Edads <- Edadt+PlazoSeg  # Edad a la que termina el plazo de seguro
+      
+      Edadp <- Edadt+PlazoPag  # Edad a la que termina el plazo de pago
+      
+      Vecdot<-rep(0,PlazoSeg)
+      
+      if (Dotal==1){
+        Vecdot[PlazoSeg]<-1
+      }
+      # Factores de selección  
+      Vecsel<-rep(1,(Edads-Edadt))
+      if (Fsel!=0){
+        switch (Fsel,
+                FacS<-c(.6,.85),
+                FacS<-c(.75,.90),
+                FacS<-c(.8,.95)
+        )
+        Vecsel[1:length(FacS)]<-FacS
+      } 
+      
+      # Factores de Persistencia  
+      Vecper<-rep(1,(Edads-Edadt))
+      if (Persis!=0){
+        switch (Persis,
+                FacP<-c(1,.75,.85,0.90,0.92,0.94,0.96),
+                FacP<-c(1,.70,.80,0.85,0.90,0.92,0.95),
+                FacP<-c(1,.80,.88,0.92,0.94,0.96,0.98)
+        )
+        Vecper<-c(FacP,rep(last(FacP),(length(Vecper)-length(FacP))))
+      }  
+      
+                  Gadminfijo <- Gfij/(Sap/1000)   # Gastos de administración fijo 
+    
+    Gadminvar <- Gvar         # Gastos de administración variables
+    
+    Veccom<-rep(1,(Edadp-Edadt))
+    
+    switch (Comis,
+            FacC<-c(0.6,0.20,0.10,0.08,0.04),
+            FacC<-c(0.4,0.15,0.08,0.04,0.02),
+            FacC<-c(0.3,0.12,0,06,0.04,0.02)
+      )
+    Veccom<-c(FacC,rep(last(FacC),(length(Veccom)-length(FacC))))
+          
+      Vecqx<-TablaMx$qx[Edadt:(Edads-1)]*Vecsel*cumprod(Vecper)   
+      
+      Veckpxs<-cumprod(c(1,TablaMx$px[Edadt:(Edads-2)]))*cumprod(Vecper)
+      
+      Veckpxp<-cumprod(c(1,TablaMx$px[Edadt:(Edadp-2)]))*cumprod(Vecper)[1:(Edadp-Edadt)]
+      
+      PriesgoNumerador <- (Vecqx*Veckpxs+Vecdot*Veckpxs )%*% Vectasa[2:(1+length(Vecqx))]
+      
+      PriesgoDenominador <-(Veckpxp %*% Vectasa[1:(length(Veckpxp))])
+      
+      PrimaRiesgo <- 1000 * (tasa/log(1+tasa))*(PriesgoNumerador/PriesgoDenominador)
+
+      Gadq <- (Veccom * Veckpxp) %*%  Vectasa[1:(length(Veckpxp))]/(Veckpxp %*%  Vectasa[1:(length(Veckpxp))])
+          
+    PrimaTarifa <- (PrimaRiesgo + Gadminfijo) / (1 - Gadminvar - Gadq)
+
+    Prima<-SumaAseg*PrimaTarifa/1000
+  
+    for (t in 1:PlazoSeg){
+  
+     IngPrima[t]<-Prima*Veckpxp[t]*Vecper[t]
+  
+     EgrSiniestros[t]<-Vecper[t]*Veckpxs[t]*Vecqx[t]*SumaAseg
+  
+     EgrGadminfij[t]<-1500*Vecper[t]*Veckpxs[t]
+  
+     EgrGadminvar[t]<- IngPrima[t]* Gadminvar
+  
+     EgrGadq[t]<-IngPrima[t]*(Veccom[t] * Veckpxp[t])
+  
+     if (t==1) IngLiber[t]<-0 else IngLiber[t]<-(Vecper[t-1]*Veckpxp[t-1]-
+                                              Vecper[t]*Veckpxp[t])*SaldoInicio[t]
+  #IngLiber[t]<-0
+  
+     EgrRescate[t]<-IngLiber[t]* (1-CargoRescate[t])
+  
+     ProdFin[t]<-SaldoInicio[t]*tasa+(IngPrima[t] - EgrGadminfij[t] - 
+               EgrGadminvar[t] - EgrGadq[t]-EgrSiniestros[t])*tasa/2
+  
+     Saldofinal[t]<-SaldoInicio[t]+IngPrima[t] -  EgrSiniestros[t] -
+                 EgrGadminfij[t] - EgrGadminvar[t] - EgrGadq[t] +                                   IngLiber[t] -EgrRescate[t]+ProdFin[t]
+  
+     if (t<PlazoSeg) SaldoInicio[t+1]<-Saldofinal[t]
+
+}
+
+    CashFlow<-data.frame( SaldoI=SaldoInicio,
+                          Prima=IngPrima,
+                          Siniestros=EgrSiniestros,
+                          GtoAdmF=EgrGadminfij,
+                          GtoAdmV=EgrGadminvar,
+                          GtoAdq=EgrGadq,
+                          Liber=IngLiber,
+                          Devol=EgrRescate,
+                          Intereses=ProdFin,
+                          SaldoF=Saldofinal
+                          )
+
+    return(CashFlow)
+  
+}
+  
+```
+
+
+## 5. El reto de las tasas de interés bajas {data-progressive=TRUE}
+
+Hasta ahora hemos construido un modelo de pricing y un modelo de cash flow, ambos aplican en el diseño de un plan, en ese momento hicimos nuestra mejor estimación sobre los diferentes parámetros que determinan el plan de tal forma que cumplen con  los objetivos de los diferentes participantes, en resumen podemos decir que construir un **modelo actuarial** es hacer una representación de la realidad identificando factores e interacciones entre ellos que nos llevan a un resultado determinado,   establecer sus relaciones, construir métricas de seguimiento, identificar y analizar tendencias son tareas que combinan  ciencia, tecnología y arte, encontrar matices, momentos, ritmos y perspectivas, mezclarlo con algoritmos, herramientas, teoremas y probabilidades es un reto que vale la pena tomar.
+
+Como mencionamos al momento del diseño del plan hicimos nuestra mejor estimación de los parámetros técnicos, fuimos prudentes determinando el valor de cada uno de ellos para manejar los riesgos dentro del apetito de riesgo establecido y fuimos lo suficientemente agresivos para posicionar el producto como atractivo para los asegurados y canal de distribución. Pese a todos nuestros esfuerzos y buena disposición lo anterior no es suficiente ya que el entorno de negocio es dinámico y debemos tener una idea del comportamiento de nuestra cartera con la situación actual del entorno de negocio.
+
+Des esta forma tenemos dos situaciones fundamentales que debemos atender
+
+i) Administrar un portafolio de pólizas  
+ii) Desarrollar un nuevo plan
+
+En este ejercicio vamos utilizar el ejercicio de Cash FLow y aplicarlo al portafolio comparando los resultados utilizando los parámetros de origen,los actualizados y los parámetros esperados, haciendo especial énfasis en las tasas de interés. 
+
+
+```{r Reto001, exercise=TRUE, exercise.cap="Escenarios ",exercise.setup="CashFlow"}
+# En este ejercicio se encuentra precargadas las funciones:
+
+# PR()--Pricing y CF()--Cashflow  con parámetros 
+#               Edad       Edad del asegurado
+#               Tabla      Tabla de mortalidad
+#               Tasa       Tasa de interes
+#               PlazoSeg   Plazo de Seguro
+#               PlazoPag   Plazo de pago
+#               Dotal      Indicador de plan dotal 1=si  0=no
+#               Fsel       Apuntador a un vector de Factores de selección
+#               Persis     Apuntador a un vector de Persistencia
+#               Gvar       Porcentaje de gasto variable
+#               Gfij       Monto de gastos fijo anul
+#               Comis      Apuntador a un vector de comisiones
+#               Sap        Monto de suma asegurada promedio 
+
+# Primero unos ejemplos de ejecición de estas funciones
+
+#  PR<-function(Edad,Tabla,Tasa,PlazoSeg,PlazoPag=0,Dotal=0,Fsel=0,Persis=0,Gvar,Gfij,Comis=1,Sap){
+PR(40,3,.04,20,0,0,0,0,.04,1500,1,2000000)
+
+# Cash<-CF(Edad,Tabla,Tasa,PlazoSeg,PlazoPag,Dotal,Fsel,Persis,Gvar,Gfij,Persis,Sap,SumaAseg)
+
+Param1<-list(Edad=40,Tabla=2,Fsel=3)
+Param2<-list(Edad=45,Tabla=4,Fsel=5)
+
+lab_comp <- paste0("**Parametros**<br><i ", "style='font-size:8pt;color:blue;' <br>","Edad :",Param1$Edad,"  ",Param2$Edad," <br>",
+"Tabla :",Param1$Tabla,"   ",Param2$Tabla," <br>",
+" </i>")
+Cash1<-CF(Edad=40,Tabla=3,Tasa=.04,PlazoSeg=20,PlazoPag=0,Dotal=0,Fsel=0,Persis=0,Gvar=.04,Gfij=1500,Comis=1,Sap=2000000,SumaAseg=3000000)
+
+Cash2<-CF(40,3,0.04,20,0,0,0,1,0.04,1500,1,2000000,3000000)
+
+Cash1 %>% kable(caption="Proyección de flujos de efectivo",digits=0, longtable = T, booktabs = T) %>% kable_styling(bootstrap_options = c("striped", "hover","condensed"))
+
+Grafica1<-data.frame(t=seq(1:length(Cash1$SaldoF)),Uno=Cash1$SaldoF,Dos=Cash2$SaldoF)
+
+  ggplot(data=Grafica1,aes(x=t))+
+      geom_line(aes(y=Uno,color='orange')) +
+      geom_line(aes(y=Dos,color='purple')) +
+      ylab('Flujo FInal')+xlab('Años')+
+      scale_colour_manual(name = 'Flujos',
+                          values = c('orange'='orange','purple'='purple'),
+                          labels = c('Corrida Uno','Corrida Dos')) + 
+      #       facet_wrap(~grupo,scales="free",labeller=labeller(grupo=Titulos))+
+      labs(title="Comparativo de Flujos de efectivo") +
+  geom_textbox(aes(x = 40, y = 8000, label = lab_comp),
+               width = unit(15, "lines"), stat = "unique")
+  
+Rango<-c(40,45,50)
+
+(RangoP<-unlist(lapply(Rango,PR,Tabla=3,Tasa=.04,PlazoSeg=20,PlazoPag=20,                         Dotal=1,Fsel=0,Persis=0,Gfij=1500,Gvar=.04,Sap=2000000,Comis=1)))
+```
+

@@ -1,0 +1,14 @@
+Como actualiar el repositorio
+en el bash de git 
+
+
+cd  C:/Users/queza/OneDrive/Documentos/DeltaWise/PracticasActuariales/DeltaPackage
+
+git add .
+
+git commit -m "Archivos nuevos"
+
+git push
+
+git status
+

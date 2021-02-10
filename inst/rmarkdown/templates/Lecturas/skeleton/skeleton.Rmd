@@ -1,0 +1,576 @@
+---
+title:
+  "Practicas Actuariales en R"
+output:
+  html_document:
+    df_print: paged
+---
+
+\newpage
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(htmltools)
+library(tidyverse)
+library(shiny)
+```
+
+```{r, echo=FALSE}
+htmltools::img(src = knitr::image_uri("C:/Users/queza/OneDrive/Documentos/PracticasActuariales/Calentamiento/Calentamiento/Calentamiento_files/figure-html/DeltaWise.jpg"), 
+               alt = 'DeltaWise', 
+               style = 'position:absolute; top:0; right:0; padding:10px;')
+```
+
+<style> body {text-align: justify} </style>
+
+# Lecturas y Materiales {.tabset}
+
+## Preambulo  
+
+Nuevamente te agradezco que estés realizando esta practica actuarial.
+
+Esta práctica actuarial es un taller en el que desarrollaras  modelos actuariales para la toma de decisiones, considerando como herramienta el lenguaje R, en esta ocasión en torno a temas de pricing y seguimiento de un portafolio de vida individual, tomando la problemática que representan las tasas de interés bajas.
+
+El nivel de la práctica es para principiantes en lo referente al lenguaje R e intermedio en lo que se refiere a conceptos técnicos. De hecho esa practica la podemos considerar como introductoria al lenguaje, por lo que quedan bien para alguien que quiere iniciarse en la practica de R.
+
+El enfoque es crear un vínculo entre los conceptos técnicos y las herramientas informáticas que nos permitan desarrollar modelos conceptuales y hacernos una idea de la marcha del negocio. La práctica no es un curso exhaustivo de R, tampoco un curso de técnicas actuariales; nos centraremos en conceptualizar el problema, diseccionarlo e integrar una solución a través de definir y evaluar indicadores, presentar escenarios y definir rutas de acción.
+
+La practica la integral los siguientes elementos:
+
++ **Video:** que es una guía de todo el curso y viene a sustituir a las sesiones presenciales de un curso tradicional.
++ **Prácticas en R:** Constituidas por un bloque de ejercicios en R, en el que podrás codificar en R.
++ **Lecturas y Materiales:** Espacio en el que encontrarás definiciones, datos, lecturas y referencia a artículos relacionados con los temas tratados. 
++ **Espacio colaborativo de la práctica** Medio que te permitirá plantear tus dudas y sugerencias, conocer las inquietudes de la comunidad que ha participado en el taller, contribuir a un proyecto comunitario e interactuar con el instructor y otros participantes del taller.  
+
+
+
+
+
+<a href = "https://martin-quezada.shinyapps.io/Calentamiento/" target="_blank">Aplicación de Ejercicios</a>
+
+![](https://www.yoursite.com/miniature.png)](https://www.youtube.com/watch?v=fW8amMCVAJQ)
+
+
+<a href = "https://enterprise.github.com/login" target="_blank"> Espacio Colaborativo</a>
+
+<span style="color: orange">Para entrar al espacio colaborativo necesitas dar de alta una cuenta de GitHub y buscar praticas actuariales</span>
+
+El espacio de Lecturas y Materiales también te ayudará para dar contexto a los elementos técnicos. 
+
++ Establecer un contexto general de la problemática del tema de la práctica. 
++ Indicar algunas opciones/problemas a los que se enfrenta la administración de una empresa, sin que haya una respuesta correcta o incorrecta de las situaciones presentadas; el lector deberá establecer una acción (reunir y alinear diferentes elementos) coherente desde una o varias perspectivas.
++ Presentar material complementario (con enlaces a internet).
+
+
+## Progreso
+
+En esta sección podras revisar tu progeso en el curso
+
++----------+--------+-----------+--------+-----------+---------+-----------+    
+|Unidades  |Antes de|Variables y|Vectores|Estructuras|Funciones|Tasas de   |
+|          | empezar|Operadores |        |de Control |         |interés    |
++----------+--------+-----------+--------+-----------+---------+-----------+     
+|Videos    | Antes  |Variables  |Vectores|Estructuras|Funciones|Funciones  |  
+|Ejercicios| Antes  |Variables  |Vectores|Estructuras|Funciones|     Reto  |  
+|Lecturas  | Antes  |Variables  |Vectores|Estructuras|Funciones|     Reto  |  
++----------+--------+-----------+--------+-----------+---------+-----------+    
+
+
+     
+## Entorno del Negocio
+
+Desde el punto de vista de los contratantes/asegurados (clientes), un seguro satisface dos objetivos: primero,  disponer de continuidad financiera **(Protección)** ante eventos que pueden truncar o limitar la capacidad económica de una persona (muerte, invalidez, otros riesgos); segundo, contar con un instrumento de **ahorro** que posiblemente aproveche, en el futuro, ventajas fiscales.  En consecuencia, las compañías de seguros enfrentan el reto de invertir los recursos de los clientes de tal forma que puedan estar disponibles en el momento en que éstos los requieran.  
+
+
+Por su parte, los objetivos de la aseguradora son múltiples y dependen del interesado: 
+
++ Con relación a los asegurados/contratantes: Aceptar el riesgo biométrico al que están expuestas las personas y dar a éstas certidumbre de cumplir con las obligaciones del contrato.
++ Para los mercados (consumidores/inversionistas) y autoridades: Minimizar el riesgo de insolvencia.  
++ Para socios comerciales (Distribuidores): Construir una red de distribución sólida, perdurable, que llegue a los mercados objetivo. 
++ Para Inversionistas: Retribuir al accionista de forma adecuada por el capital y el riesgo que está asumiendo su inversión.
++ Para todos: Desarrollar una operación robusta y flexible que aproveche las oportunidades del mercado. 
+
+
+La forma en que se busca alcanzar estos objetivos define el entorno de los negocios de cada compañía, los cuales tienen como elemento común la necesidad de proyectar flujos de efectivo, de entrada y de salida, en condiciones inciertas y de largo plazo.  
+
+<details> <summary>Modelo de Cash Flow:\   \   \ Click para expandir/contraer!</summary>
+![](C:/Users/queza/OneDrive/Documentos/PracticasActuariales/Calentamiento/Calentamiento/Calentamiento_files/figure-html/CashFlow.png)
+</details>
+\
+
+<details> <summary>Riesgos que afectan el valor económico de los pasivos: \ \  Click para expandir/contraer!</summary>
+![](C:/Users/queza/OneDrive/Documentos/PracticasActuariales/Calentamiento/Calentamiento/Calentamiento_files/figure-html/VidaRiesgo.png)
+</details>
+
+\
+
+La administración de un portafolios de seguros de vida representa una problemática compleja si el objetivo es desarrollar o administrar una cartera existente, porque intervienen factores cambiantes, que hacen difícil prever su futuro comportamiento. En tanto, en este entorno de incertidumbre se deben tomar decisiones para construir el futuro; por ello, es indispensable contar con un plan de desarrollo (plan de negocios), cuyos indicadores permitan conocer si las variables siguen el rumbo esperado.
+
+Por si esto fuera poco, los efectos de algunos indicadores en el corto y largo plazo pueden darnos señales engañosas. Por ejemplo, tenemos ventas relevantes de un plan nuevo, que en el corto plazo los gastos exceden a los ingresos, lo que genera una pérdida en el ejercicio, pero en el largo plazo ese mismo plan genera  valor. 
+
+De forma inversa tenemos el ejemplo contrario. Para el mismo plan, pero unos años más adelante podríamos observar que la tasa de caducidad observada es más alta que la incluida en el diseño del plan, lo que generaría un detrimento del valor futuro de esta cartera, aunque las utilidades pudieran haberse incrementado en un ejercicio.
+
+En este ambiente incierto lo único que nos queda es recopilar información, analizarla, identificar tendencias y construir modelos prácticos para determinar la situación de cada compañía/entidad, si prevalecerá la tendencia o en su defecto si habrá que emprender acciones para modificarla. En este sentido, los modelos de solvencia dinámica que establece la legislación mexicana pueden ser de mucha ayuda, pero cabe advertir que todavía estamos lejos de que estos modelos sean empleados por los tomadores de decisiones.  
+
+<details> <summary><span style="color:purple">Conceptos clave a incorporar en los ejercicios de R</span></summary>
+
+- Componente de protección y ahorro en un seguro de vida, prima de riesgo -´prima nivelada
+- Contratos de largo plazo, duración del contrato, plazo de seguro, plazo de pago de primas, creación de reservas proyectar flujos financieros en un periodo largo
+- Incertidumbre sobre variables clave 
+
+</details>
+
+
+
+## Mortalidad
+
+Una tabla de mortalidad es la consumación de un modelo estadístico sobre los fallecimientos de una población. El modelo es uno de los principales insumos para las compañías de seguros de vida, porque sirve para determinar precios, reservas, requerimientos de capital y calcular dividendos, entre otros aspectos.  Tiene un carácter predictivo porque intenta conocer el número de fallecimientos de una población, en cierto periodo, y proyectar los flujos futuros de un bloque de negocio. 
+
+En México, la Comisión Nacional de Seguros y Fianzas ha desarrollado una serie de modelos de tablas de mortalidad, con el propósito de servir como norma para el cálculo de reservas, en este sentido incluyen un recargo sobre las observaciones como margen de seguridad para tener reservas suficientes.
+ 
+
+
+<details> <summary>CARACTERÍSTICAS DE TABLAS DE MORTALIDAD DEL MERCADO MEXICANO      Click para expandir/contraer!</summary>
+
+
+|         | Experiencia Mexicana 62-67  | Experiencia Mexicana 82-89| CNSF 2000-I| México 2000|
+|---------|--------------------|-----------|---------------|----------|
+|FUENTE DE INFORMACIÓN | 100% Mercado|100% Mercado|100% Mercado|Polizas individuales con seleccion|
+|UNIDAD DE OBSERVACIÓN|Pólizas |Pólizas|Pólizas|Suma Asegurada|
+|PERÍODO DE SELECCIÓN|4 años |4 años |4 años |4 años|
+|SEPARACIÓN DE GÉNERO|No |No |No |No|
+|PERÍODO DE OBSERVACIÓN|1962 a 1967| 1982 a 1989| 1991 a 1998| 1995 a 1998|
+|VOLUMEN DE INFORMACIÓN|649,000 expuestos 6,428 siniestros|82,970 siniestros|54,623 siniestros|$240,440 expuestos $592M siniestros|
+|LIGA|<a href = "http://www.revista-actuario.com/weff/sites/default/files/Tablas%20de%20Mortalidad%20Mexicanas_2.pdf" target="_blank">Mex 62-67</a> | <a href = "https://www.cnsf.gob.mx/Difusion/OtrasPublicaciones/DOCUMENTOS%20DE%20TRABAJO%20DESCRIPTIVOS/02.-Tabla%20de%20Mortalidad%20Experiencia%20Mexicana%201982-1989.pdf" target="_blank">CNSF 82-89</a>|<a href = "http://www.cnsf.gob.mx/Difusion/OtrasPublicaciones/DOCUMENTOS%20DE%20TRABAJO%20DESCRIPTIVOS/DdT80conimag%20BV%20ok.pdf" target="_blank">CNSF 2000I</a> | <a href = "https://www.actuaires.org/EVENTS/Congresses/Paris/Papers/265.pdf" target="_blank">Mex 2000</a>|
+</details>
+
+\
+La mortalidad es un fenómeno dinámico sujeto de innumerables factores, como el acceso a sistemas de salud,  alimentación, estilos de vida, herencia genética, y otros, por lo que debemos estar atentos a su evolución y, sobre todo, al impacto en la población objetivo del estudio de mortalidad. 
+
+Los volúmenes de información que manejan las compañías, la mayoría de las veces, son insuficientes para determinar una tabla de mortalidad, por lo que es conveniente que desarrollemos **atajos**, para comparar la mortalidad esperada con la ocurrida. 
+
+
+<details> <summary>Evolucion de la Mortalidad Mexicana      Click para expandir/contraer!</summary>
+
+![ ](C:/Users/queza/OneDrive/Documentos/PracticasActuariales/Calentamiento/Calentamiento/Calentamiento_files/figure-html/EvolMort.png)
+
+![ ](C:/Users/queza/OneDrive/Documentos/PracticasActuariales/Calentamiento/Calentamiento/Calentamiento_files/figure-html/ComparativoMortalidad.png)
+
+</details>
+
+
+<a href = "https://rde.inegi.org.mx/rde_14/doctos/rde_14_art1.pdf" target="_blank">Inferencia bayesiana y tablas de mortalidad en México</a>
+
+<a href = "http://132.248.9.195/ptd2018/febrero/0771009/0771009.pdf" target="_blank">TABLAS DE MORTALIDAD UTILIZADAS EN MÉXICO Y SUS ASPECTOS RELEVANTES DURANTE EL PERIODO 1843 A 2005</a>
+
+
+
+## Tasa de interes
+
+### Causas y Efectos de variaciones de la tasa de interes en un portafolio de inversión
+
+
+<details> <summary>Causas  </summary>
+
+
+En primera instancia y sin adentrarnos mucho en teoría macroeconómica sobre las relaciones entre ahorro, crédito, consumo, inversión, tasa de interés real y política económica de los gobiernos, conviene señalar que existe una relación proporcional entre la tasa de interés real y el nivel de ahorro, esto es, mientras más alta sea la tasa de interés real mayor será el atractivo que de los instrumentos de ahorro, mientras que resulta inversamente proporcional la relación entre la tasa de interés real y la inversión, de manera que mientras más alta sea la tasa de interés real menos atractivo será la inversión y menores los montos de la misma.
+
+En los últimos años, el ritmo de crecimiento de las economías más desarrolladas ha sido muy bajo, por lo cual los gobiernos de estos países han adoptado la medida de bajar la tasa de interés real, buscando incentivar la inversión e incidir positivamente en la tasa de crecimiento.
+
+
+Son muchas las hipótesis de la causa del estancamiento de la tasa de crecimiento, entre ellas:
+
+-	La desaceleración del crecimiento de la población.
+-	La saturación de mercados locales y el fin de las oportunidades de expansión territorial.
+-	La recomposición en la distribución de la riqueza, cada vez menos personas tienen una proporción más grande de la riqueza global.
+
+
+Como consecuencia, existe un exceso de ahorro, una tendencia a una demanda agregada insuficiente, una reducción de la tasa de crecimiento y una tendencia de los gobiernos a reducir la tasa de interés real. 
+
+Por otra parte, así como en los mercados de inversión hay una huida hacia la calidad (Fly to Quality: Decisión rápida que toma una masa grande de inversionistas de cambiar sus instrumentos de inversión por otros menos riesgosos, debida a la ocurrencia de un evento o hecho que afecta a toda una industria o un país; por ejemplo, la pandemia de Covid-19 ha llevado a muchos actores económicos, no necesariamente inversionistas, a restringir sus compras e inversiones y a incrementar su nivel de ahorro. La incertidumbre en los mercados financieros o internacionales generalmente causa este comportamiento gregario.
+
+Por ello la respuesta de los gobiernos ha sido procurar el mantenimiento de tasas de interés real bajas durante la próxima década.
+
+</details>
+
+<details> <summary>Efectos  </summary>
+
+El efecto de movimientos en la tasa de interés de referencia y el precio de los bonos es inversamente proporcional; así, cuando la tasa de interés sube el precio de los bonos baja y viceversa, por ejemplo: supongamos que tenemos un bono cupón cero que paga 1000 unidades al final de un año, con una tasa de interés de 5%, en estas condiciones el precio de este bono al inicio del año sería de 952.38=1000/(1+.05) . Al subir las tasas de interés al 7%, el monto que necesitaríamos invertir para obtener los mismos 1000, al final del año, sería de 934.58=1000/(1+0.07), esto es, un incremento de 200 puntos base (aumento en la tasa de 5% a 7%) constituye una disminución en el precio del bono, equivalente a 17.80 unidades monetarias.  Cuando la tasa es de 3% una reducción de 200 puntos base, provocaría inversamente un aumento en el valor del precio del bono, éste pasaría a 970.39 unidades, esto es una apreciación de 18.49 unidades monetarias.  
+
+Todo la anterior corresponde a una situación en la que tenemos una inversión, en términos de un balance contable estamos del lado de los activos, pero que pasa si tenemos una responsabilidad, es decir que en el balance contable estamos del lado de los pasivos, veamos: consideremos un plan en el que el contratante recibirá 10,000 unidades después de hacer pagos periódicos por 35 años, con una tasa de 5% , al momento de celebrar el contrato; los pagos que debe hacer el contratante en este ejemplo son de 105.45; si las tasas se mantienen estables durante 35 años, el contrato no tendrá problema, pero supongamos que en los primeros 20 años la tasa es de 7% y en los últimos 15 años la tasa disminuye al 3%, en este escenario los pagos del contratante acumularían solamente 9,226 al final del año 35, lo que significaría que la empresa tienen que cubrir con capital propio el monto del contrato.
+
+En resumen, los cambios en las tasas de interés alteran el valor presente de pagos futuros. En particular, una disminución de tasas de interés ocasiona que los pagos futuros tengan más peso y, por lo tanto, aumenta la magnitud de los pasivos de una compañía de seguros de vida.  
+
+</details>
+
+### Tendencia de tasas de interes 
+
+Hasta diciembre de 2015 la regulación mexicana establecía tasas de interés a las cuales se debían valuar los pasivos: 5% para pólizas en moneda nacional, 4% para pólizas emitidas en dólares y 3.5% para pólizas emitidas en Unidades de Inversión (UDIs); ahora la regulación establece que se deben valuar con tasas libres de riesgo que el actuario debe determinar con base a indicadores del mercado.
+
+En las gráficas siguientes se puede advertir con mucha claridad cómo el descenso en las tasas de interés está afectando a las aseguradoras. De manera delicada a partir de 2015 en México y en el mundo a partir del año 2000
+
+
+<details> <summary>En México</summary>
+
+![ ](C:/Users/queza/OneDrive/Documentos/PracticasActuariales/Calentamiento/Calentamiento/Calentamiento_files/figure-html/NalTendB.png)
+
+![ ](C:/Users/queza/OneDrive/Documentos/PracticasActuariales/Calentamiento/Calentamiento/Calentamiento_files/figure-html/NalTendU.png)
+
+
+https://assets.ey.com/content/dam/ey-sites/ey-com/en_gl/topics/insurance/insurance-pdfs/ey-nextwave-insurance-life-retirement.pdf
+</details>
+
+<details> <summary>En el mundo</summary>
+
+![ ](C:/Users/queza/OneDrive/Documentos/PracticasActuariales/Calentamiento/Calentamiento/Calentamiento_files/figure-html/InterTendencia.png)
+</details>
+
+
+### Efectos en el negocio de seguro de Vida
+
+<details> <summary>General </summary>
+Predecir tasas de interés seguirá siendo un reto, ya sea que se trate de establecer tasas para el próximo mes o el próximo año. Las aseguradoras de vida se enfrentan a una tarea mucho más difícil: deben hacer suposiciones sobre tasas de interés dentro en plazos de 20 o 30 años, o en ocasiones más.  La necesidad de mirar tan lejos está relacionada con la naturaleza a largo plazo de la mayoría de las vidas.
+
+Estos supuestos son la base para determinar primas, reservas y nivel de competitividad en el mercado (al ofrecer tasas con un interés garantizado y la participación de utilidades por producto financiero). Las compañías adoptan un criterio conservador o prudente para establecer estos parámetros, sin embargo, cuando las tasas de mercado se acercan a las tasas técnicas, empiezan los problemas, incluso si sus portafolios están invertidos por arriba de la tasa de valuación, porque tendrían problemas con la tasa de inversión del negocio que está en periodo de pago de primas.
+
+Y entonces lo que parecía **conservador y prudente** ahora es riesgoso y en algunos casos crítico.
+
+
+Esta tendencia se ha venido estudiando en el mercado mundial desde finales del siglo pasado, pero en México habíamos estado al margen de esta problemática, porque las tasas de interés se mantenían altas y muy por arriba de las tasas técnicas, sin embargo, en los últimos años este comportamiento se ha revertido.
+
++ Los rendimientos financieros no caerán de forma inmediata al nivel actual de las tasas de referencia, sin duda la política de conservar inversiones al vencimiento servirá de colchón para mantener los rendimientos durante un tiempo, no obstante, cada compañía debe evaluar la situación de su portafolios de inversiones, con base en los próximos vencimientos de sus bonos y en la porción de su cartera de seguros que otorga dividendos financieros. Estimaciones en el mercado internacional establecen que el rendimiento de una aseguradora de vida podría descender a las tasas actuales después de un periodo que va de cuatro a diez años a partir de que la tasa real esté por abajo de la tasa técnica.
+The Geneva Papers on Risk and Insurance Vol. 25 No. 1 (January 2000)
+
+
++ El precio de los productos asume una tasa de interés para primas a largo plazo más altas que la tasa de interés de valuación. El margen de utilidad comienza a caer cuando las tasas de mercado caen por debajo del supuesto de tasa para primas. Una vez que los rendimientos del mercado caen por debajo de la tasa de valuación, como ahora puede estar ocurriendo, existe una pérdida real para la aseguradora en el componente de ahorro de los productos.
+Este último efecto ha comenzado a presentarse especialmente con productos que fueron diseñados para periodos con tasas de interés relativamente altas. Los productos en ese momento a menudo garantizaban rendimientos de intereses más altos que los actuales y, a menos que también se compararan activos con duraciones similares a las de los pasivos, habría problemas de intereses futuros (y actuales) con estos productos.
+
++ En este entorno de tasas de interés bajas, para el negocio nuevo es necesario replantear la composición de los productos tradicionales y explorar nuevas estructuras de productos y fuentes de utilidad; para el negocio en marcha debemos estar pendientes del comportamiento del asegurado, ya que los movimientos en la tasa de interés y, en el mercado mexicano, además, el tipo de cambio, pueden llevar a cambios significativos en los patrones de conservación y conversión a saldado y prorrogado, los que pondrían más presión a la estrategia de inversión. 
+ 
+
+</details>
+
+<details> <summary>Seguros Temporales</summary>
+Es la forma de seguro más sencilla y su oferta se fundamenta en cubrir los riesgos biométricos, durante el periodo determinado. El componente de ahorro es mínimo, ya que solo incluye el diferencial entre la prima de riesgo nivelada y la prima de riesgo de cada edad durante los años en que la prima nivelada es mayor que la prima por edad; incluso en los esquemas "Unit Linked" puede darse el caso que no haya diferencia entre la prima nivelada y la prima por edad.
+
+Que dice la regulación, esta contempla otorgar valores en efectivo en los plazos de seguro; a partir de 10 años de duración, los montos de reserva no son significativos y generalmente no se utilizan como argumento de venta. 
+
+Dentro de los planes de seguros de vida esta opción es de las menos vulnerable a cambios en tasa de interes, siempre que las duraciones de los planes sea de corto/mediano plazo, hasta 10 años. 
+
+</details>
+
+<details> <summary>Ordinarios de Vida</summary>
+En esta modalidad se contempla pagar la suma asegurada / capital en riesgo al momento del fallecimiento del asegurado, genera provisiones/reservas matemáticas para cubrir la suma asegurada a una edad final objetivo generalmente igual o mayor que 99 años, esto origina que las reservas representen un porcentaje significativo de los pagos, por lo que es común presentar como argumento de venta el porcentaje de recuperación, calculado como la reserva disponible en el año dividido entre la prima pagada. 
+
+Por otra parte, son los contratos que tienen el mayor plazo de vigencia en un portafolios, si un asegurado contrata este plan a los 30 años la póliza puede estar vigente por 69 años, si el plan se calculó con edad final de 99 años.
+
+Estos planes son mas vulnerables que los temporales a cambios en tasa de interes debido a el componente de ahorro y la duración de las polizas.
+
+</details>
+
+<details> <summary>Dotales</summary>
+Esta modalidad combina la protección de los seguros temporales con un componente de ahorro que se entrega a los asegurados que llegan vivos al termino de vigencia de la póliza, se han utilizado para formar recursos con objetivos de ahorro de mediano y largo plazo, como financiar la educación de los hijos o hacer frente a ciertos gastos, y contempla una tasa garantizada tanto para el componente de protección como de ahorro.
+
+Dado que el componente de ahorro representa un porción importante de la prima y que hay una garantia implicita en el calculo de la prima, este plan es muy vulnerable a cambios en tasas de interes.  
+</details>
+
+<details> <summary>Pagos Limitados</summary>
+Esta es una opción que ofrecen algunas compañias de financiar el costo de los servicios de la poliza, tanto de protección como de ahorro en un periodo de tiempo mas corto que el plazo de seguro, por ejemplo puede ser que la cobertura sea de por vida (ordinario de vida) pero que las primas se paguen hasta edad 65 (Edad de jubilación) en el caso del asegurdo de 30 años, el plazo de seguro es de 69 y el plazo de pago de primas 35.
+
+Esta caracteristica aumenta la vulnerabilidad de estos planes a cambios en la tasa de interes.
+</details>
+
+
+
+### Por que es un problema
+
+<details> <summary>Comportamiento del Asegurado</summary>
+Podríamos decir que un contrato de seguro de vida es una apuesta a largo plazo, en donde muchos supuestos deben verificarse, y un elemento clave es el comportamiento del asegurado a lo largo de la vigencia de la póliza.
+
+Para el contratante la póliza de seguros es un paquete de opciones, desde la elección del plan, determinar la suma asegurada, pagar la prima anualmente, rescatar la reserva, solicitar un préstamo con cargo a la reserva, convertir a seguro saldado o prorrogado, incluir riesgos complementarios, incrementar la suma asegurada o renovar la póliza en su vencimiento, todas son acciones que el asegurado puede tomar a lo largo de la vigencia de la póliza y que generalmente están incluidas en el clausulado de la póliza. 
+
+Entender los motivos de compra y los eventos que afectan los intereses y opciones que tiene el contratante es clave para tomar acciones que incentiven o inhiban comportamientos en favor de la masa de asegurados, a efectos de cumplir con los múltiples objetivos que tiene la aseguradora.
+
+Estas acciones inician desde el diseño mismo del plan, por ejemplo, si en un plan temporal a un año, incluimos una cláusula de renovación garantizada, deberíamos tratar el plan como un plan que termina en un año o como un ordinario de vida, si bien en términos de reservas no tenemos que generar una provisión, ya que cada año el contratante pagará la prima de riesgo que corresponda, pero en términos de suscripción no vamos a poder valorar el riesgo como si fuera un plan nuevo, además de que si incluimos una cláusula de incremento automático de suma asegurada, la situación se complica todavía más.
+
+En el escenario que nos ocupa, de bajas tasas de interés, debemos estar atentos si hay un patrón que modifique los supuestos del plan, que afecte la proyección de pasivos y el diseño que hemos establecido de los activos.
+
+Por ejemplo, si las tasas de interés están por abajo de la tasa técnica, la propensión de los contratantes a conservar su póliza va a ser mayor, lo que no necesariamente es bueno en planes dotales o si el tipo de cambio varía de forma súbita, originando un incremento de los rescates en los planes en dólares.
+
+
+</details>
+
+
+<details> <summary>Profundidad del Mercado</summary>
+No hay suficientes instrumentos para invertir en todas las duraciones que requiere la aseguradora 
+
+</details>
+
+
+### Cuales son las opciones
+
+Los rendimientos de la cartera de inversión han disminuido en los últimos años a consecuencia de las bajas tasas de interés; el impulso de las aseguradoras de buscar instrumentos de mayor rendimiento y, por lo tanto, de mayor riesgo está contenido por un marco regulatorio de solvencia más estricto.  No se espera que el panorama para el desempeño de las tasas de interés cambie, más aún, las condiciones indican que el periodo de tasas bajas se extenderá; en este escenario ¿cuáles son las opciones que tienen las aseguradoras? 
+
+La respuesta de cada compañía contemplará factores como son, los mercados que atiende, la red de distribución y la fortaleza financiera y muy probablemente pasará por acciones de rediseño de productos, optimización de capital y revisión de precios.
+
+La rentabilidad llama a ser conservador en cuanto al nivel que deben tomar los parámetros de un producto; pero la competitividad empuja a ser agresivo para determinar los mismos parámetros; encontrar el equilibrio es un arte.
+
+<details> <summary>Rediseño de productos</summary>
+
+En un entorno de tasas bajas los cargos de operación son mas evidentes ya que los rendimientos financieros no compensan los cargos por gastos de operación y adquisición, esto se debe a que la estructura de gastos de la aseguradora incluye tanto el componente de protección como el de ahorro (en los esquemas tradicionales de comercializacion de agente/promotor su ingreso es un porcentaje de la prima total, lo que encarece significativamente los costos de operación en comparación con otras instituciones financieras). Si bien en el componente de protección las aseguradoras son las unicas entidades que ofrecen una opción a la transferenicia de los riesgos biometricos, en el componente de ahorro hay un buen numero de competidores con costos de operación significativamente menores.
+
+Por lo tanto para ofrecer rendimientos competitivos las aseguradoras deben transformar sus esquemas de gastos y pasar de gastos en porcentaje de la prima a gastos como un porcentaje de los fondos, esto puede llevar a redefinir el rol y participación de los canales de distribución. 
+
+</details>
+
+
+<details> <summary>Productos Unit Linked</summary>
+
+En los mercados más desarrollados los aseguradores han adoptado una posición conservadora en cuanto a incluir garantías de tasa de interés en sus contratos, por medio de productos llamados "Unit Linked" (UL): En estos el riesgo de inversión se transfiere al contratante, para ello cada póliza cuenta con dos fondos, el fondo base y el fondo excedente. El fondo base recibe los recursos para mantener vigente el contrato de seguro, de aquí se descuenta el costo del seguro, los gastos de administración y los gastos de adquisición; cuando se agoten los recursos del fondo base se toman los recursos suficientes del fondo excedente para mantener vigente la póliza; cuando se agoten los dos fondos, la póliza termina dado que no hay recursos para mantenerla. 
+
+Con referencia al fondo excedente, hay que precisar que este puede seguir una estrategia de inversión definida por la compañía, en cuyo caso se dice que son fondos generales, posiblemente la compañía defina algunas estrategias de inversión, dentro de las cuales el contratante podrá elegir o en su defecto podrá pactar una estrategia de inversión especifica cuando los montos de inversión son significativos; se dice entonces que son fondos segregados, y en ambos casos la participación de la aseguradora es marginal sobre el producto financiero. 
+ 
+En esta opción la oferta de las aseguradoras converge con bancos y casas de bolsa, las diferencias consisten en el esquema de promoción, el tratamiento fiscal y, sobre todo, en el hecho de que los compañías de seguros son la único institución financiera que puede tomar y diversificar riesgos biométricos, lo que los bancos y casas de bolsa no pueden hacer.
+
+</details>
+
+<details> <summary>Hedging</summary>
+
+El Hedging consiste en adquirir un instrumento financiero (Derivados) que compense el riesgo de eventos que afecten el desempeño esperado de una variable; en el caso de las tasas de interés puede ser una opción que se active en el escenario de que la tasa de referencia baje de cierto nivel, el instrumento pagaría el diferencial de tasas. 
+La semejanza de estos Derivados con los seguros es notable, Peter Bernstein marco en su libro "Against the Gods: The Remarkable Story of Risk”:
+"Las opciones tienen un gran parecido con las pólizas de seguro y, a menudo, se compran por la misma razón. De hecho, si las pólizas de seguro se convirtieran en valores negociables, se cotizarían en el mercado exactamente como se cotizan las opciones..."
+Siguiendo con las comparaciones entre seguros y Derivados, en particular las Opciones, un contrato de seguros se puede visualizar como un paquete de opciones:
+
+
+- La garantía 
+- Derecho a rescatar
+- Opción a incrementar el capital asegurado
+- Entre otras
+
+En este caso la aseguradora se convierte en una suscriptora de opciones, el asegurado tiene ciertos derechos y paga un precio por mantenerlos. Cuando las condiciones del mercado cambian el valor de las opciones también lo hace; en el entorno actual de tasas de interés bajas, el valor de la opción "tasa garantizada" aumenta. 
+
+Estos instrumentos Derivados son muy complejos de operar y la legislación establece que debe existir un área específica dentro de la compañía para operarlos y reportarlos, por lo que en el precio del producto debería incluirse el costo del instrumento y el costo del área que operaria estos instrumentos.
+
+
+
+
+</details>
+
+<details> <summary>Calce entre Activos y Pasivos</summary>
+Hemos visto que los contratos de seguros de vida son de largo plazo y que durante este periodo la compañía tiene la necesidad de proyectar flujos de entrada y salida, considerando las provisiones (reservas) que se generan y las correspondientes inversiones.  De esta forma en el diseño del portafolios de activos deben estar disponibles en el momento que se requiera (contar con recursos líquidos) a la vez de que se busca tener instrumentos que paguen al menos una tasa mayor a la tasa técnica, al momento que los instrumentos vigentes venzan (Riesgo de reinversión).
+
+Consideremos la definición que hace la Asociación internacional de actuarios sobre el proceso de calce de activos y pasivos:
+
+"El calce de activos y pasivos es el proceso continuo de formulación, implementación, seguimiento y revisión de estrategias relacionadas con activos y pasivos para lograr los objetivos financieros, con base a un conjunto dado de tolerancias y restricciones de riesgo"
+
+</details>
+
+### Ligas de Interes
+<a href = "https://assets.ey.com/content/dam/ey-sites/ey-com/en_gl/topics/insurance/insurance-pdfs/ey-nextwave-insurance-life-retirement.pdf">NextWave Insurance: life insurance and retirement</a>
+
+<a href = "https://www.actuaries.org/IAA/Documents/CMTE_IRC/RiskBook_project/Revised_Chapters/Ch18_Policyholder_Behavior_20Feb2020.pdf">Policyholder Behaviour and Management Actions</a>
+
+<a href = "https://voxeu.org/sites/default/files/file/Geneva17_27oct.pdf">Causes and Consequences of Persistently Low Interest Rates</a>
+
+<a href = "https://www.econstor.eu/bitstream/10419/172918/1/wp2016-02.pdf">Measuring Interest Rate Risk in the Life Insurance Sector: the U.S. and the U.K.</a>
+
+<a href = "https://link.springer.com/content/pdf/10.1111/1468-0440.00047.pdf">The Impact of Low Interest Rates on Insurers</a>
+
+<a href = "https://www.actuaries.org/LIBRARY/Papers/RiskBookChapters/Ch13_Asset_Liability_Management_24Oct2016.pdf">Asset Liability Management Techniques and Practices for Insurance Companies</a>
+
+<a href = "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3089627">Asset-liability management for long-term insurance business</a>
+
+Seccion "3. Innovations in insurance products" altamente recomendada
+
+<a href = "https://repositorio.tec.mx/bitstream/handle/11285/629378/33068001074082.pdf?sequence=1&isAllowed=y">ESTIMACIÓN DE LA CURVA DE RENDIMIENTO MEXICANA UTILIZANDO EL MODELO DE COMPONENTES PRINCIPALES Y EL MODELO DE DIEBOLD-LI.</a>
+
+<a href = "https://www.banxico.org.mx/sistema-financiero/d/%7BB3490869-D3AE-10F8-0182-4B30ABBC0244%7D.pdf">Un método eficiente para la simulación de curvas de tasas de interés</a>
+
+## Gastos / Inflación
+
+
+Complementario a los elementos técnicos necesarios para cubrir las necesidades del cliente, ya sea de protección o de ahorro, la prima a cargo de éste debe incluir un margen suficiente para solventar el coste de los servicios que requiere la póliza a lo largo de su vigencia; hasta aquí tenemos dos plazos clave, el primero **el plazo de seguro**, que es el periodo de vigencia de la póliza y, el segundo, **el plazo de pago de primas**, que puede ser igual o menor al plazo de seguro, cuando es menor nótese que la prima debe contemplar el margen suficiente para dotar de servicios a la póliza en el periodo donde ya no hay más ingresos de prima. 
+
+
+<details> <summary>Servicios que requiere una póliza</summary>
+
+
+|Con contacto con el cliente| Sin Contacto con el cliente    |
+---------|--------------------|
+|Comercialización| Desarrollo de Productos   |
+|Distribución| Sistemas   |
+|Cobranza| Valuacion de Reservas   |
+|Pago de Beneficios| Selección de Riesgos |
+|Servicios a asegurados|Contabilidad |
+|Quejas / UNE|Auditoria |
+| |Estadisticas, entre otras |
+
+<span style="color: orange"> Esta clasificación depende de la plataforma operativa de cada compañía</span>
+
+</details>
+
+\
+
+Entre ellos podemos incluir costos por atraer y distribuir la póliza, gastos de adquisición, gastos de administración, costo de reaseguro, costo de capital, supuestos de persistencia y valores de rescate implícitos en los contratos, esto es: 
+
+**<span style="color:darkblue">Gastos de Adquisición:</span>** Incluyen costos incurridos por suscribir un nuevo contrato, vamos a clasificarlos: 
+
+ **1. Los que son necesarios para evaluar el riesgo y emitir la póliza:** Son los costos por el proceso de contratación, pruebas médicas, investigación en caso de sumas aseguradas altas, emisión y entrega de la póliza. 
+
+ **2. Los que se derivan de las operaciones para hacer llegar el producto al mercado:** Estos dependen del esquema de distribución/comercialización de la compañía, las variantes son muchas y van desde esquemas directos en los que la compañía promueve con sus propios recursos la contratación, hasta los indirectos como los que se realizan en las áreas de seguros de los bancos, cuya promoción y contratación se realiza en la sucursal bancaria y con los recursos del banco, así como los esquemas de promoción y de agencias, en los que asesores de una red especializada promueven, orientan y acompañan en los procesos de contratación.
+
+**<span style="color: darkblue">Gastos de Administración:</span>** Son los costos de actividades orientadas a cumplir con los beneficios del contrato; incluyen todas las áreas administrativas, técnicas, operativas y de servicio, funciones como cobranzas, sistemas, desarrollo de productos, cálculo de reservas, auditoría, recursos humanos, gestión de reaseguro.
+
+Esta clasificación es relevante ya que algunos de estos gastos están ligados al monto de la suma asegurada / capital en riesgo y su tratamiento en los modelos de Pricing es diferente, asimismo es relevante el momento en el que se realizan los servicios, ya que en los modelos los costos asociados se provisionan y nivelan.
+
+
+Así como con la Mortalidad y la Tasa de interés, de que hay eventos que alteran su comportamiento a lo largo del tiempo, con los Gastos sucede lo mismo, los fenómenos que modifican el nivel de los supuestos de gastos son la inflación y los avances tecnológicos, ya sea aplicados a la administración de la póliza o la selección de riesgos.
+
+Por ejemplo, de acuerdo con nuestras estimaciones, las pólizas de un nuevo producto tienen que contribuir con 1,000 pesos para solventar los gastos que representa el costo laboral, pero dentro de 10 años el costo laboral ya no va a ser de 1,000 por causa de la inflación. Por otra parte los cambios tecnologicos pueden tener impacto significativo en los costos, por ejemplo los gastos de distribución de las polizas hace 20 años (correo, mensajeria, papelería, impresión, ensobretado, etc.) podia representar hasta 4% de la prima ahora con los medios digitales estas actividades pueden representar 1% de la prima
+
+Inlcuir graficas de Inflación en México e historico del % de costo de operacion de la CNSF (financia AMIS)
+
+
+## Caso: Seguros El Fenix {.tabset}
+
+### La Cartera
+
+A lo largo de los años y administraciones, la compañia de Seguros FENIX ha consolidado un portafolio de alrededor de 100 mil polizas de vida individual, caracterizado por cuatro bloques de negocio
+
+
+
+| Bloque  | Años de Promoción  | Polizas   | Suma Asegurada| Reserva  |
+|:--------|-------------------:|----------:|--------------:|---------:|
+|Gen-X    |  1985-2004         |  17931    |       5384    |          |  
+|Banca    |  2000-2013         |  27192    |       2717    |          |
+|Masivo   |  2008-2015         |  49370    |       1816    |          |
+|Gen-M    |  2013-A la fecha   |   5681    |       3413    |          |
+|---------|--------------------|-----------|---------------|----------|
+
+
+#### <span style="color: darkblue">Gen X</span>  
+<details> <summary>Click para expandir/contraer!</summary>
+
+* **Mercado objetivo:** Población economicamente activa, con capacidad de ahorro de al menos 10% de su ingreso, oferta comercial en planes con un fondo asociado, participación de utilidades sobre reservas. Distribución por sexo 70% masculino, 30% femenino, suma asegruada promedio $300,000 Mx
+
+* **Estructura de planes:**
+    - Temporal 20                60%  
+    - Ordinario de Vida          15%  
+    - Temporal a edad alcanzada  10%      
+    - Dotal 20                   10%
+    - Prima unica                 5%
+ 
+* **Sistema de Distribución / Esquema de compensación:**
+    - Estructura de Promotorias  30 promotorias / 400 agentes
+    - Compensación Agentes  :
+        - Prima Unica 4% 
+        - Resto Planes Año 1: 50%   Año 2: 20%  Año 3: 10% Ano 5 en adelante 4%
+    - Compensación Promotor:
+        - Prima Unica 2%
+        - Resto Planes Año 1: 15%   Año 2: 8%  Año 3: 5% Ano 5 en adelante 2%  
+
+* **Experiencia de Siniestralidad:** 85% de la siniestralidad esperada, se ha visto un deterioro de 0.5% cada año
+* **Conservación:** Conservación del 96% anualmente
+* **Supuestos técnicos:**
+    - Mortalidad: Experiencia Mexicana 62-67
+    - Supuestos de Tasa de Interes: Para Valuación 8% Para Primas 10%
+    - Esquema de suscripción: Completa, aplican examenes medicos y cuestionarios financieros para sumas aseguradas altas.
+</details>
+
+#### <span style="color: darkblue">Banca</span>
+<details> <summary>Click para expandir/contraer!</summary>
+
++ **Mercado objetivo:** Clientes del Banco Quimera contratantes de un credito o cuenta habientes, suma asegurada promedio 100,000
++ **Sistema de distribución:** Ejecutivos bancarios en sucursal con meta especifica de polizas nuevas
+    Compensación; 15% de todas las primas
+    
++ **Estructura de planes:**
+    - Dotal 5 años  65%
+    - Temporal 5 años 30%
+    - Temporal a 1 año 5% 
+ 
++ **Experiencia de Siniestralidad:** El promedio de los ultimos años esta en 94% de la siniestralidad esperada, el coeficiente de variación ($\sigma/\mu$) es 10%  
++ **Experiencia de conservación:** Los tres primeros años 80% cada año, los años posteriores 93% 
++ **Supuestos técnicos**
+    - Mortalidad Experiencia Mexicana 82-89 recargada 20%
+    - Supuestos de Tasa de Interes: Para Valuación 4% Para Primas 5%
+    - Suscripción: Simplificada, solo aplican tres preguntas, cualquier respuesta positiva causa declina la contratación
+</details>
+
+#### <span style="color: darkblue">Masivo</span>
+<details> <summary>Click para expandir/contraer!</summary>
+
++ **Mercado objetivo:** Asociados del club de consumo  Eureka, Edades de aceptación minima 18 máxima 65 sin edad de cancelación, suma asegurada  hasta 55 años 40,000 de mas de 55 años 20,000 
++ **Sistema de distribución:** Acuerdo Comercial Eureka SA, porcentaje de uso de instalaciones de 30% 
++ **Estructura de planes**
+    - Temporal 1 renovable  100%
++ **Experiencia de Siniestralidad:** 90% de la siniestralidad esperada
++ **Conservación:**  Primer año 60%, segundo año 75% del tercer año en adelante 96% 
++ **Supuestos técnicos**
+    - Mortalidad: Experiencia Mexicana CNSF 2000I
+    - Supuestos de tasas de Interes: Valuación 5% Primas 6%
+</details>
+
+#### <span style="color: darkblue">Gen M</span>
+<details> <summary>Click para expandir/contraer!</summary>
+
+* **Mercado objetivo:**Población economicamente activa, con capacidad de ahorro de al menos 10% de su ingreso, oferta comercial incluye paquete de asistencias para tangibilizar los beneficios. Distribución por sexo 60% masculino, 40% femenino, suma asegurada promedio $600,000 Mx
+* **Sistema de distribución:** Promotorias / agencias 
+   + Compensación Agente 
+       - Plazo de pago igual o mayor a 20 años: 
+    Año 1: 40%   Año 2: 12%  Año 3: 8% Ano 5 en adelante 2%
+       - Plazo de pago menor a 20 años: 
+    Año 1: 20%   Año 2: 8%  Año 3: 5% Ano 5 en adelante 2%
+  + Compensación Promotor
+       - Plazo de pago igual o mayor a 20 años: 
+    Año 1: 12%   Año 2: 5%  Año 3: 2% Ano 5 en adelante 1%
+       - Plazo de pago menor a 20 años: 
+    Año 1: 6%   Año 2: 3%  Año 3 en adelante 1%
+
+* **Estructura de planes:**
+    + Dotal  5     10%
+    + Dotal 10     15%
+    + Dotal 20     20%
+    + Temporal 10  20%
+    + Temporal 20  25%
+    + Ordinario de Vida 10%
+* **Experiencia de Siniestralidad:**
+   - Positiva, alrededor del 65% de la siniestralidad esperada
+* **Conservación** 
+
+* **Supuestos técnicos**
+    - Mortalidad: Experiencia Mexicana CNSF 2000I al 80%
+    - Supuestos de Tasa de INteres: Para Valuación 5% Para Primas 6%
+    
+</details>
+
+<!---El valor en libros (provisiones técnicas) y el valor económico de los pasivos de seguros dependen de (i) el tamaño y el momento de los pagos de siniestros futuros, incluidos los gastos, y (ii) las tasas de interés utilizadas para descontar estos pagos de siniestros hasta la fecha actual.
+--->
+
+
+\
+
+En 35 años que Seguros Fenix opera en el mercado los procesos han cambiado, la empresa ha actualizado su plataforma informatica en 2 ocasiones
+
+
+### El futuro
+
+El promotor mas importante de Seguros El Fenix ha identificado un nicho del mercado desatendido y desea promover un plan de seguro con ahorro, el negocio es el siguiente:
+
+*"... cada cuatro años en los mundiales de futbol un nutrido grupo de aficionados se translada al pais sede a apoyar a la selección, muchos de ellos se endeudan para cubrir los gastos a 36 meses a tasas del 30% anual, el objetivo del plan es darles una opción para ahorrar los recursos suficientes para afrontar los gastos del viaje y las entradas a los partidos. El mercado objetivo esta determinado por hombres entre 30 y 50 años, las comisiones que otra compañía me ofrece son el 30% el primer año 12% el segundo año y 5% el tercer y cuarto año, la suma asegurada de ahorro esta entre 500,000 y 1,000,000 y la de fallecimiento debe ser el 50% de este monto.* 
+
+*En el ultimo mundial mi agencia de viajes coloco 4000 paquetes, espero colocar al menos 6000 para el proximo Mundial sin cambiara el esquema, 10,000 si cuento con el plan de ahorro, complementario  podemos aplicar el mismo esquema para las Olimpiadas aunque mi proyeccion para este evento es de solo 3,000 paquetes "*
+
+El producto es un plan dotal mixto a cuatro años los registros de persistencia de la compañia indican que un 32% de las polizas cancelan durante el primer año, 20% el segundo año, 8% el tercer año y 4% el cuarto año, ademas la estadistica muestra que los planes dotales tienen 40% mejor persistencia que el resto de su cartera, aunque nunca ha maneja planes dotales de menos de 5 años.
+
+El escenario esperado para las tasas de interes es que sigan a la baja y que lleguen a 3.5% en el plazo a 1 año y 4.2 en el plazo a 5 años
+
+<a href = "https://media.bus.wisc.edu/data/act_sci/Frees/ActMathII/EmergingCosts/EmergingCosts14Nov2012/index.html" target="_blank">Valor subyacente de una poliza de seguro de vida</a>
+
+
+## Referencias
+
+Jan H. Holsboer 2000 "The Impact of Low Interest Rates on Insurers" The Geneva Papers on Risk and Insurance Vol. 25 No. 1 paginas 38-58
+
+Irina Fan, et al. 2020 "Lower for even longer: what does the low interest rate economy mean for insurers?" Swiss Re Institute  Septiembre 2020
+

@@ -1,5 +1,5 @@
-Como actualiar el repositorio
-en el bash de git 
+# Como actualiar el repositorio
+  en el bash de git 
 
 
 cd  C:/Users/queza/OneDrive/Documentos/DeltaWise/PracticasActuariales/DeltaPackage
@@ -11,4 +11,7 @@ git commit -m "Archivos nuevos"
 git push
 
 git status
+
+# Para ligarlo al depositorio de github
+git remote add origin <<Liga de Hithub>>
 

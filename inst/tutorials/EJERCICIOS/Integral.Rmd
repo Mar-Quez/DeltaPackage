@@ -66,7 +66,7 @@ Nuevamente te agradezco que estés realizando esta practica actuarial.
 
 <span style="color: navy">El texto de cada ejercicio complementa el video, por lo que te sugiero que revises estos contenidos, así como el código ya escrito, el cual te puede servir como ejemplo para desarrollar tu práctica.
 
-<span style="color: navy">Si ejecutas el ejercicio y la sintaxis no es la correcta o no incluyes tu código, aparecerá un mensaje indicando error; recuerda que tienes la opción de reiniciar el ejercicio.
+<span style="color: navy">Si ejecutas el ejercicio **Run Code** y la sintaxis no es la correcta o no incluyes tu código, aparecerá un mensaje indicando error; recuerda que tienes la opción de reiniciar el ejercicio.
 
 
 
@@ -120,7 +120,7 @@ question("Cual es la razón por la que se actualizo VarExponencial de 1 componen
 
 ```
 
-<span style="color: navy">Al final de cada sección hay una recapitulación de conceptos e instrucciones; comprueba que puedes poner en práctica tus conocimientos. 
+<span style="color: navy">Al final de cada sección de ejercicios (E) hay una recapitulación de conceptos e instrucciones; comprueba que puedes poner en práctica tus conocimientos. 
 
 ```{r Resumen01, exercise=TRUE, exercise.cap="Resumen"}
 

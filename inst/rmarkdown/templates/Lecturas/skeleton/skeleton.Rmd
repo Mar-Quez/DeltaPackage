@@ -46,7 +46,11 @@ La practica la integral los siguientes elementos:
 
 
 
-<a href = "https://martin-quezada.shinyapps.io/Calentamiento/" target="_blank">Aplicación de Ejercicios</a>
+```{r, echo=FALSE}
+actionLink("infoLink", "Ve a Ejercicios", class = "link")
+
+```
+
 
 ![](https://www.yoursite.com/miniature.png)](https://www.youtube.com/watch?v=fW8amMCVAJQ)
 
